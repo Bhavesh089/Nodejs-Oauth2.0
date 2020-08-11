@@ -1,1 +1,1 @@
-# Nodejs-Oauth2.0
+# lazada-seller-auth
