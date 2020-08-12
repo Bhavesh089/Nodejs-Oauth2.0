@@ -88,6 +88,7 @@ passport.use(
 			tokenURL: 'https://auth.lazada.com/rest/auth/token/create',
 			clientID: keys.lazada.clientID,
 			clientSecret: keys.lazada.clientSecret,
+			sign_method: 'sha256',
 			callbackURL: '/auth/lazada/redirect',
 			passReqToCallback: true
 		},

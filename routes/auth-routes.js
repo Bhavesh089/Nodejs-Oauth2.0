@@ -70,6 +70,7 @@ router.get(
 	//   })(req, res);
 	// },
 	(req, res) => {
+		console.log(res);
 		res.redirect('/profile/');
 	}
 );

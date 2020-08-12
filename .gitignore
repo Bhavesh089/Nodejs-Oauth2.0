@@ -42,7 +42,6 @@ node_modules/
 jspm_packages/
 
 # sensitive keys
-config/keys.js
 
 # TypeScript v1 declaration files
 typings/
