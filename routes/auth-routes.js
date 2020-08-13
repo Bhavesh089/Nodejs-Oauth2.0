@@ -50,7 +50,7 @@ router.get('/lazada', passport.authenticate('oauth2'));
 
 // callback route for google to redirect to
 router.get(
-	'/lazada/redirect',
+	'/lazada/redirect:code',
 	// passport.authenticate('oauth2'),
 	// wrap passport.authenticate call in a middleware function
 	function(req, res, next) {
