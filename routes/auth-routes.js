@@ -42,9 +42,9 @@ router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) =
 	res.redirect('/profile/');
 });
 
-router.post('/profile', passport.authenticate('oauth2'), passport.authenticate('hmac'), (req, res) => {
-	res.json(req.user);
-});
+// router.post('/profile', passport.authenticate('oauth2'), passport.authenticate('hmac'), (req, res) => {
+// 	res.json(req.user);
+// });
 // auth with lazada
 router.get('/lazada', passport.authenticate('oauth2'));
 

@@ -1,18 +1,17 @@
-const crypto = require('crypto');
-const keys = require('./keys.js');
+// const crypto = require('crypto');
+// const keys = require('./keys.js');
 
-const secret = keys.lazada.clientSecret;
-const appkey = keys.lazada.clientID;
+// const secret = keys.lazada.clientSecret;
+// const appkey = keys.lazada.clientID;
+// const time = new Date().getTime();
 
-var message = (appkey, sign_method) => {
-	const msg = [ appkey, sign_method ];
-	sorting = sort(msg);
-};
+// const message = () => {
+//     const msg = [ appkey, sign_method, time];
+//     sorting = sort(msg);
+//     return sorting.join('');
+// };
 
-var hash = crypto.createHmac('sha256', secret).update(message);
+// var hash = crypto.createHmac('sha256', secret.encode).update(message);
 
-// to lowercase hexits
-hash.digest('hex');
-
-// to base64
-hash.digest('base64');
+// // to lowercase hexits
+// hash.digest('hex').toUpperCase();
