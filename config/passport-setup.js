@@ -5,6 +5,20 @@ const OAuth2Strategy = require('passport-oauth2');
 const keys = require('./keys.js');
 const User = require('../models/user-model');
 
+// const secret = keys.lazada.clientSecret;
+// var message = (appkey, sign_method) => {
+// 	const msg = [ appkey, sign_method ];
+// 	sorting = sort(msg);
+// };
+
+// var hash = crypto.createHmac('sha256', secret).update(message);
+
+// // to lowercase hexits
+// hash.digest('hex');
+
+// // to base64
+// hash.digest('base64');
+
 passport.serializeUser((user, done) => {
 	done(null, user.id);
 });
@@ -81,6 +95,20 @@ passport.use(
 );
 
 passport.use(
+	new HmacStrategy(function(publicKey, done) {
+		User.findOne({ publicKey: publicKey }, function(err, user) {
+			if (err) {
+				return done(err);
+			}
+			if (!user) {
+				return done(null, false);
+			}
+			return done(null, user, privateKey);
+		});
+	})
+);
+
+passport.use(
 	new OAuth2Strategy(
 		{
 			authorizationURL: 'https://auth.lazada.com/oauth/authorize',
@@ -88,7 +116,6 @@ passport.use(
 			tokenURL: 'https://auth.lazada.com/rest/auth/token/create',
 			clientID: keys.lazada.clientID,
 			clientSecret: keys.lazada.clientSecret,
-			sign_method: 'sha256',
 			callbackURL: '/auth/lazada/redirect',
 			passReqToCallback: true
 		},
