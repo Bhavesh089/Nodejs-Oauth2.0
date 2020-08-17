@@ -1,8 +1,12 @@
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
-const keys = require('../config/keys');
-
+// const lazadaRedirect_controller = require('../Controllers/Redirect');
+const Lazada = require('../models/lazada-model');
+var request = require('request');
+// const keys = require('../config/keys');
+// const crypto = require('crypto');
+// const utf8 = require('utf8');
 // auth login
 router.get('/login', (req, res) => {
 	res.render('login', { user: req.user });
@@ -49,54 +53,152 @@ router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) =
 router.get('/lazada', passport.authenticate('oauth2'));
 
 // callback route for google to redirect to
-router.get(
-	'/lazada/redirect:code',
-	// passport.authenticate('oauth2'),
-	// wrap passport.authenticate call in a middleware function
-	function(req, res, next) {
-		const api = '/auth/token/create';
-		const code = req.params.code;
-		console.log(code);
-		const time = new Date();
-		const parameters = {
-			app_key: keys.lazada.clientID,
-			sign_method: 'sha256',
-			timestamp: time.getTime(),
-			code: code
-		};
-		const sorted_parameters = [];
-		Object.keys(parameters).sort().forEach(function(v, i) {
-			console.log(sorted_parameters.push(v, parameters[v]));
-		});
-		console.log(sorted_parameters.join(''));
-		parameters_str = api + sorted_parameters.join('');
-		let hash = crypto
-			.createHmac('sha256', encode_utf8(keys.lazada.clientSecret))
-			.update(encode_utf8(parameters_str).digest('hex').toUpperCase());
-		console.log(hash);
-		// call passport authentication passing the "local" strategy name and a callback function
-		passport.authenticate('oauth2', function(error, user, info) {
-			// this will execute in any case, even if a passport strategy will find an error
-			// log everything to console
-			console.log(error);
-			console.log(user);
-			console.log(info);
+// router.get(
+// 	'/lazada/redirect',
+// 	lazadaRedirect_controller.lazadaRedirect,
+// 	(req, res) => {
+// 		console.log(res);
+// 		res.redirect('/profile/');
+// 	}
 
-			if (error) {
-				res.status(401).send(error);
-			} else if (!user) {
-				res.status(401).send(info);
-			} else {
-				next();
+// 	// passport.authenticate('oauth2'),
+// 	// wrap passport.authenticate call in a middleware function
+// );
+
+router.get(
+	'/lazada/redirect',
+	(req, res) => {
+		console.log(req.query.code);
+		code = req.query.code;
+
+		propertiesObject = { code: code };
+
+		request({ url: 'http://localhost:8000/CreateToken', qs: propertiesObject }, (err, response, body) => {
+			if (err) {
+				console.log(err);
+				return;
 			}
 
-			res.status(401).send(info);
-		})(req, res);
-	},
-	(req, res) => {
-		console.log(res);
+			console.log(response.statusCode);
+			if (response.statusCode === 200) {
+				let profile = JSON.parse(body);
+				console.log(profile.country_user_info[0]['seller_id']);
+				Lazada.findOne({ seller_id: profile.country_user_info[0]['seller_id'] }).then((currentUser) => {
+					if (currentUser) {
+						// already have the user
+						console.log('user is: ' + currentUser);
+						// done(null, currentUser);
+					} else {
+						// if not, create user in our db
+						new Lazada({
+							access_token: profile.access_token,
+							refresh_token: profile.refresh_token,
+							refresh_expires_in: profile.refresh_expires_in,
+							expires_in: profile.expires_in,
+							seller_id: profile.country_user_info[0]['seller_id'],
+							account: profile.account
+						})
+							.save()
+							.then((newUser) => {
+								console.log('new user created: ' + newUser);
+								// done(null, newUser);
+							})
+							.catch((err) =>
+								response.status(404).json({
+									err: err
+								})
+							);
+					}
+				});
+				return console.log(profile.access_token);
+			} else {
+				return console.log(response.body);
+			}
+			//
+		});
+		// console.log(res.status(200).json({ code: code }));
 		res.redirect('/profile/');
 	}
+
+	// passport.authenticate('oauth2'),
+	// wrap passport.authenticate call in a middleware function
+);
+
+router.get(
+	'/lazada/renewToken',
+	(req, res) => {
+		console.log(req.query.refreshtoken);
+		refreshToken = req.query.refreshtoken;
+
+		propertiesObject = { refreshtoken: refreshToken };
+
+		request({ url: 'http://localhost:8000/RenewToken', qs: propertiesObject }, (err, response, body) => {
+			if (err) {
+				console.log(err);
+				return;
+			}
+
+			console.log(response.statusCode);
+			if (response.statusCode === 200) {
+				let profile = JSON.parse(body);
+				console.log(profile);
+				console.log(profile.country_user_info_list[0]['seller_id']);
+				Lazada.findOne({ seller_id: profile.country_user_info_list[0]['seller_id'] }).then((currentUser) => {
+					if (currentUser) {
+						// already have the user
+						console.log('user is: ' + currentUser);
+						Lazada.update(
+							{ seller_id: profile.country_user_info_list[0]['seller_id'] },
+							{
+								$set: {
+									access_token: profile.access_token,
+									refresh_token: profile.refresh_token,
+									refresh_expires_in: profile.refresh_expires_in,
+									expires_in: profile.expires_in
+								}
+							}
+						)
+							.exec()
+							.then((result) => console.log(result))
+							.catch((err) => {
+								res.status(400).json({ err: err });
+							});
+						// done(null, currentUser);
+						// } else {
+						// 	// if not, create user in our db
+						// 	new Lazada({
+						// 		access_token: profile.access_token,
+						// 		refresh_token: profile.refresh_token,
+						// 		refresh_expires_in: profile.refresh_expires_in,
+						// 		expires_in: profile.expires_in,
+						// 		seller_id: profile.country_user_info[0]['seller_id'],
+						// 		account: profile.account
+						// 	})
+						// 		.save()
+						// 		.then((newUser) => {
+						// 			console.log('new user created: ' + newUser);
+						// 			// done(null, newUser);
+						// 		})
+						// 		.catch((err) =>
+						// 			response.status(404).json({
+						// 				err: err
+						// 			})
+						// 		);
+						//
+					}
+				});
+				return console.log(profile.access_token);
+			} else {
+				return console.log(response.body);
+			}
+			//
+		});
+		// console.log(res.status(200).json({ code: code }));
+		res.redirect('/profile/');
+	}
+
+	// passport.authenticate('oauth2'),
+	// wrap passport.authenticate call in a middleware function
 );
 
 module.exports = router;
