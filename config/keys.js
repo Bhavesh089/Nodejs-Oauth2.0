@@ -9,7 +9,7 @@ module.exports = {
 	},
 	lazada: {
 		clientID: '121585',
-		clientSecret: 'spUZHteZ4tlglG48rZlawPS75OtxXuYf'
+		clientSecret: 'dzFd2J1lCBbE3vs2I7l9LsytrP23OroD'
 		//clientID: "121695",
 	},
 	mongodb: {
