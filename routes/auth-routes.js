@@ -121,7 +121,7 @@ router.get(
 			}
 		);
 		// console.log(res.status(200).json({ code: code }));
-		// res.redirect('/profile/');
+		res.redirect('/profile/');
 	}
 
 	// passport.authenticate('oauth2'),
