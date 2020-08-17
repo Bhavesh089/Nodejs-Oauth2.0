@@ -118,6 +118,23 @@ passport.use(
 			clientSecret: keys.lazada.clientSecret,
 			callbackURL: '/auth/lazada/redirect',
 			passReqToCallback: true
+		},
+		// passport callback function
+		(req, accessToken, refreshToken, profile, done) => {
+			console.log(req.query);
+			console.log(accessToken);
+			console.log(refreshToken);
+			console.log(profile);
+
+			new User({
+				username: 'lazop.sg@gmail.com',
+				googleId: profile.account
+			})
+				.save()
+				.then((newUser) => {
+					console.log('new user created: ' + newUser);
+					done(null, newUser);
+				});
 		}
 		// function (accessToken, refreshToken, profile, cb) {
 		//   User.findOrCreate({ exampleId: profile.id }, function (err, user) {
