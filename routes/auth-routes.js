@@ -50,7 +50,7 @@ router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) =
 // 	res.json(req.user);
 // });
 // auth with lazada
-router.get('/lazada', passport.authenticate('oauth2'));
+// router.get('/lazada', passport.authenticate('oauth2'));
 
 // callback route for google to redirect to
 // router.get(

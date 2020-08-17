@@ -108,40 +108,40 @@ passport.use(
 // 	})
 // );
 
-passport.use(
-	new OAuth2Strategy(
-		{
-			authorizationURL: 'https://auth.lazada.com/oauth/authorize',
-			tokenURL: 'https://lazada-server.herokuapp.com/CreateToken',
-			tokenURL: 'https://auth.lazada.com/rest/auth/token/create',
-			clientID: keys.lazada.clientID,
-			clientSecret: keys.lazada.clientSecret,
-			callbackURL: '/auth/lazada/redirect',
-			passReqToCallback: true
-		},
-		// passport callback function
-		(req, accessToken, refreshToken, profile, done) => {
-			console.log(req.query);
-			console.log(accessToken);
-			console.log(refreshToken);
-			console.log(profile);
+// passport.use(
+// 	new OAuth2Strategy(
+// 		{
+// 			authorizationURL: 'https://auth.lazada.com/oauth/authorize',
+// 			tokenURL: 'https://lazada-server.herokuapp.com/CreateToken',
+// 			tokenURL: 'https://auth.lazada.com/rest/auth/token/create',
+// 			clientID: keys.lazada.clientID,
+// 			clientSecret: keys.lazada.clientSecret,
+// 			callbackURL: '/auth/lazada/redirect',
+// 			passReqToCallback: true
+// 		},
+// 		// passport callback function
+// 		(req, accessToken, refreshToken, profile, done) => {
+// 			console.log(req.query);
+// 			console.log(accessToken);
+// 			console.log(refreshToken);
+// 			console.log(profile);
 
-			new User({
-				username: 'lazop.sg@gmail.com',
-				googleId: profile.account
-			})
-				.save()
-				.then((newUser) => {
-					console.log('new user created: ' + newUser);
-					done(null, newUser);
-				});
-		}
-		// function (accessToken, refreshToken, profile, cb) {
-		//   User.findOrCreate({ exampleId: profile.id }, function (err, user) {
-		//     return cb(err, user);
-		//   });
-		// }
-	)
-);
+// 			new User({
+// 				username: 'lazop.sg@gmail.com',
+// 				googleId: profile.account
+// 			})
+// 				.save()
+// 				.then((newUser) => {
+// 					console.log('new user created: ' + newUser);
+// 					done(null, newUser);
+// 				});
+// 		}
+// 		// function (accessToken, refreshToken, profile, cb) {
+// 		//   User.findOrCreate({ exampleId: profile.id }, function (err, user) {
+// 		//     return cb(err, user);
+// 		//   });
+// 		// }
+// 	)
+// );
 
 //"https://auth.lazada.com/oauth/authorize?response_type=code&force_auth=true"
