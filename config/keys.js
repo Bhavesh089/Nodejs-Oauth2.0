@@ -1,11 +1,11 @@
 module.exports = {
 	google: {
-		clientID: '831287663245-mig7r9cfertdfjm9f0qusgpt33c7dj19.apps.googleusercontent.com',
-		clientSecret: 'zQ0svW-933NGnJgTNcbw7UW7'
+		clientID: '952648099364-thsmb26rha8ngugu9hd2mnjj4ukdahk7.apps.googleusercontent.com',
+		clientSecret: 'k-cEUGUDheSozyhsqUASTUB7'
 	},
 	facebook: {
-		clientID: '382814826032507',
-		clientSecret: '24348c653b5cfce0a2aa91715cff635b'
+		clientID: '3379943188735842',
+		clientSecret: '4b50185a251cb32fdff27eb3fd4840bb'
 	},
 	lazada: {
 		clientID: '121585',
