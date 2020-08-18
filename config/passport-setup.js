@@ -66,7 +66,7 @@ passport.use(
 	new GoogleStrategy(
 		{
 			// options for the google strategy
-			callbackURL: '/auth/google/redirect',
+			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/google/redirect',
 			clientID: keys.google.clientID,
 			clientSecret: keys.google.clientSecret
 		},
