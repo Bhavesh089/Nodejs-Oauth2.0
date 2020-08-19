@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 // const lazadaRedirect_controller = require('../Controllers/Redirect');
-const Lazada = require('../models/lazada-model');
+const lazadaUser = require('../models/lazadaUser-model');
 var request = require('request');
 // const keys = require('../config/keys');
 // const crypto = require('crypto');
@@ -71,7 +71,6 @@ const authCheck = (req, res, next) => {
 	} else {
 		// if logged in
 		res.locals.user = req.user.id;
-		console;
 		console.log('************');
 		console.log(res.locals.user);
 		next();
@@ -81,14 +80,13 @@ const authCheck = (req, res, next) => {
 router.get(
 	'/lazada/redirect',
 	authCheck,
-	(req, res) => {
+	(req, res, done) => {
 		const userId = res.locals.user;
 		console.log('------------------------------------>');
 		console.log(userId);
 
 		console.log(req.query.code);
 		code = req.query.code;
-		user_id = userId;
 		propertiesObject = { code: code };
 
 		// request({ url: 'http://localhost:8000/CreateToken', qs: propertiesObject }, (err, response, body) => {
@@ -111,7 +109,7 @@ router.get(
 							// done(null, currentUser);
 						} else {
 							// if not, create user in our db
-							new Lazada({
+							new lazadaUser({
 								access_token: profile.access_token,
 								refresh_token: profile.refresh_token,
 								refresh_expires_in: profile.refresh_expires_in,
@@ -121,9 +119,9 @@ router.get(
 								userId: userId
 							})
 								.save()
-								.then((newUser) => {
-									console.log('new user created: ' + newUser);
-									// done(null, newUser);
+								.then((lazadaUser) => {
+									console.log('new user created: ' + lazadaUser);
+									done(null, lazadaUser);
 								})
 								.catch((err) =>
 									response.status(404).json({

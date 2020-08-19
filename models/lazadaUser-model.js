@@ -11,6 +11,6 @@ const LazadaSchema = new Schema({
 	userId: { type: String, required: true }
 });
 
-const Lazada = mongoose.model('Lazada', LazadaSchema);
+const LazadaUser = mongoose.model('Lazadauser', LazadaSchema);
 
-module.exports = Lazada;
+module.exports = LazadaUser;

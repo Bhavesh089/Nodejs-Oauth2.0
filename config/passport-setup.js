@@ -49,7 +49,7 @@ passport.use(
 					// if not, create user in our db
 					new User({
 						username: profile.displayName,
-						googleId: profile.id
+						facebookId: profile.id
 					})
 						.save()
 						.then((newUser) => {
