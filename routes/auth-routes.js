@@ -70,20 +70,22 @@ const authCheck = (req, res, next) => {
 		res.redirect('/auth/login');
 	} else {
 		// if logged in
-		const userId = req.user.id;
+		res.locals.user = req.user.id;
 		console;
 		console.log('************');
-		console.log(userId);
-		next(userId);
+		console.log(res.locals.user);
+		next();
 	}
 };
 
 router.get(
 	'/lazada/redirect',
 	authCheck,
-	(req, res, next, userId) => {
+	(req, res) => {
+		const userId = res.locals.user;
 		console.log('------------------------------------>');
 		console.log(userId);
+
 		console.log(req.query.code);
 		code = req.query.code;
 		user_id = userId;
@@ -116,7 +118,7 @@ router.get(
 								expires_in: profile.expires_in,
 								seller_id: profile.country_user_info[0]['seller_id'],
 								account: profile.account,
-								userId: user_id
+								userId: userId
 							})
 								.save()
 								.then((newUser) => {
