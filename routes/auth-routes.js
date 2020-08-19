@@ -9,7 +9,6 @@ var request = require('request');
 // const utf8 = require('utf8');
 // auth login
 router.get('/login', (req, res) => {
-	console.log(req.Lazada);
 	res.render('login', { user: req.user });
 });
 
@@ -122,7 +121,7 @@ router.get(
 			}
 		);
 		// console.log(res.status(200).json({ code: code }));
-		res.redirect('/profile/', { lazadaUser: Lazada });
+		res.redirect('/profile/', { lazadaUser: req.lazada });
 	}
 
 	// passport.authenticate('oauth2'),
