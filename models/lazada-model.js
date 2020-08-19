@@ -10,6 +10,6 @@ const LazadaSchema = new Schema({
 	account: { type: String, required: true }
 });
 
-const Lazada = mongoose.model('Lazada', LazadaSchema);
+const Lazada = mongoose.model('lazada', LazadaSchema);
 
 module.exports = Lazada;
