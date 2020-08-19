@@ -64,10 +64,23 @@ router.get('/lazada', passport.authenticate('oauth2'));
 // 	// passport.authenticate('oauth2'),
 // 	// wrap passport.authenticate call in a middleware function
 // );
+const authCheck = (req, res, next) => {
+	if (!req.user) {
+		// if user not logged in
+		res.redirect('/auth/login');
+	} else {
+		// if logged in
+		const userId = req.user.id;
+		console.log(userId);
+		next(userId);
+	}
+};
 
 router.get(
 	'/lazada/redirect',
-	(req, res) => {
+	authCheck,
+	(req, res, userId) => {
+		console.log(userId);
 		console.log(req.query.code);
 		code = req.query.code;
 
@@ -99,7 +112,8 @@ router.get(
 								refresh_expires_in: profile.refresh_expires_in,
 								expires_in: profile.expires_in,
 								seller_id: profile.country_user_info[0]['seller_id'],
-								account: profile.account
+								account: profile.account,
+								userId: userId
 							})
 								.save()
 								.then((newUser) => {

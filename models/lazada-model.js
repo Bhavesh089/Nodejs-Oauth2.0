@@ -7,7 +7,8 @@ const LazadaSchema = new Schema({
 	refresh_expires_in: { type: String, required: true },
 	expires_in: { type: String, required: true },
 	seller_id: { type: String, required: true },
-	account: { type: String, required: true }
+	account: { type: String, required: true },
+	userId: { type: String, required: true }
 });
 
 const Lazada = mongoose.model('Lazada', LazadaSchema);
