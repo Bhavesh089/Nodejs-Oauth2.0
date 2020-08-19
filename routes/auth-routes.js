@@ -80,10 +80,10 @@ router.get(
 	'/lazada/redirect',
 	authCheck,
 	(req, res, userId) => {
-		console.log(userId);
+		console.log(userId + '----------->');
 		console.log(req.query.code);
 		code = req.query.code;
-
+		user_id = userId;
 		propertiesObject = { code: code };
 
 		// request({ url: 'http://localhost:8000/CreateToken', qs: propertiesObject }, (err, response, body) => {
@@ -113,7 +113,7 @@ router.get(
 								expires_in: profile.expires_in,
 								seller_id: profile.country_user_info[0]['seller_id'],
 								account: profile.account,
-								userId: userId
+								userId: user_id
 							})
 								.save()
 								.then((newUser) => {
