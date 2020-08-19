@@ -71,6 +71,8 @@ const authCheck = (req, res, next) => {
 	} else {
 		// if logged in
 		const userId = req.user.id;
+		console;
+		console.log('************');
 		console.log(userId);
 		next(userId);
 	}
@@ -79,8 +81,9 @@ const authCheck = (req, res, next) => {
 router.get(
 	'/lazada/redirect',
 	authCheck,
-	(req, res, userId) => {
-		console.log(userId + '----------->');
+	(req, res, next, userId) => {
+		console.log('------------------------------------>');
+		console.log(userId);
 		console.log(req.query.code);
 		code = req.query.code;
 		user_id = userId;
