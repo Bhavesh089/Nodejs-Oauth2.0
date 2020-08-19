@@ -9,7 +9,7 @@ var request = require('request');
 // const utf8 = require('utf8');
 // auth login
 router.get('/login', (req, res) => {
-	res.render('login', { user: req.user });
+	res.render('login', { user: req.user, lazadaUser: req.Lazada });
 });
 
 // auth logout
