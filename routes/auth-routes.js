@@ -80,7 +80,7 @@ const authCheck = (req, res, next) => {
 router.get(
 	'/lazada/redirect',
 	authCheck,
-	(req, res, done) => {
+	(req, res, next) => {
 		const userId = res.locals.user;
 		console.log('------------------------------------>');
 		console.log(userId);
@@ -124,7 +124,7 @@ router.get(
 									next(null, lazadaUser);
 								})
 								.catch((err) =>
-									response.status(404).json({
+									res.status(500).json({
 										err: err
 									})
 								);
