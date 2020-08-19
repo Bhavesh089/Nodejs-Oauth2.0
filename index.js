@@ -41,7 +41,7 @@ mongoose.connect(
 
 // set up routes
 app.use('/auth', authRoutes);
-app.use('/profile', profileRoutes, { lazadaUser: req.lazada });
+app.use('/profile', profileRoutes);
 
 // create home route
 app.get('/', (req, res) => {
