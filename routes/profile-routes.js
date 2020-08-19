@@ -15,6 +15,7 @@ router.get('/', authCheck, (req, res) => {
 	//res.send("Greetings, " + req.user.username + "! you are logged in. ");
 	// console.log(req.lazadaUser + '----->');
 	lazadaUser = res.locals.lazada.account;
+	console.log(lazadaUser + '--------------->');
 	res.render('profile', { user: req.user, lazadauser: lazadaUser });
 });
 
