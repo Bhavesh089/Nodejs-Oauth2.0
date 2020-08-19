@@ -102,7 +102,7 @@ router.get(
 				if (response.statusCode === 200) {
 					let profile = JSON.parse(body);
 					console.log(profile.country_user_info[0]['seller_id']);
-					Lazada.findOne({ seller_id: profile.country_user_info[0]['seller_id'] }).then((currentUser) => {
+					lazadaUser.findOne({ seller_id: profile.country_user_info[0]['seller_id'] }).then((currentUser) => {
 						if (currentUser) {
 							// already have the user
 							console.log('user is: ' + currentUser);
