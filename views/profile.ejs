@@ -47,14 +47,24 @@
         <% } else { %>
         <li><a href="/auth/login">Login</a></li>
         <% } %>
+        <% if(Lazada.account) { %>
         <li><a href="/">Home</a></li>
         <li><a href="/profile">Dashboard</a></li>
-        <li><a href="/auth/lazada">Lazada</a></li>
+        <% } else { %>
+          <li><a href="/">Home</a></li>
+          <li><a href="/profile">Dashboard</a></li>
+          <li><a href="/auth/lazada">Lazada</a></li>
+          <% }
       </ul>
     </nav>
     <header>
+      <% if(Lazada.account) { %>
       <h1>Lazada Seller Dashboard</h1>
-      <h2>hello, <%= user.username %></h2>
+      <h2>hello, <%= user.username %>, you have successfully integrated with Lazada.account</h2>
+      <% } else { %>
+        <h1>Lazada Seller Dashboard</h1>
+        <h2>hello, <%= user.username %></h2>
+        <% } %>
     </header>
     <main>
       <p>
