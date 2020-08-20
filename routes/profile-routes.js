@@ -10,20 +10,20 @@ const authCheck = (req, res, next) => {
 	}
 };
 
-const lazadaUsercheck = (req, res, next) => {
-	if (req.session.result) {
-		res.locals.lazadauser = req.session.lazadaUsers;
-		next();
-	} else {
-		next();
-	}
-};
+// const lazadaUsercheck = (req, res, next) => {
+// 	if (req.session.result) {
+// 		res.locals.lazadauser = req.session.lazadaUsers;
+// 		next();
+// 	} else {
+// 		next();
+// 	}
+// };
 
-router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
+router.get('/', authCheck, (req, res, next) => {
 	//res.send("Greetings, " + req.user.username + "! you are logged in. ");
 	// let lazadaUser = req.session.result;
 	console.log(res.locals.lazadauser);
-	res.render('profile', { user: req.user, lazadauser: res.locals.lazadauser });
+	res.render('profile', { user: req.user, lazadauser: req.session.lazadaUsers });
 });
 
 module.exports = router;
