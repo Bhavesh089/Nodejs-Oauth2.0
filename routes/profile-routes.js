@@ -10,17 +10,18 @@ const authCheck = (req, res, next) => {
 	}
 };
 
-const lazadaUsercheck = (req, res, next) => {
-	if (req.session.lazadaUsers) {
-		const lazUser = req.session.lazadaUsers;
-		res.locals.lazadauser = lazUser;
-		console.log(res.locals.lazadauser + '------------------->');
-		req.session.lazadaUsers = null;
-		next();
-	} else {
-		next();
-	}
-};
+// const lazadaUsercheck = (req, res, next) => {
+// 	if (req.session.lazadaUsers) {
+// 		const lazUser = req.session.lazadaUsers;
+// 		console.log(lazUser + 'laz_user');
+// 		res.locals.lazadauser = lazUser;
+// 		console.log(res.locals.lazadauser + '------------------->');
+// 		req.session.lazadaUsers = null;
+// 		next();
+// 	} else {
+// 		next();
+// 	}
+// };
 
 router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
 	//res.send("Greetings, " + req.user.username + "! you are logged in. ");
@@ -28,7 +29,7 @@ router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
 	// console.log(res.locals.lazadauser);
 	// const lazada = res.locals.lazadauser;
 	// console.log(JSON.parse(lazada));
-	res.render('profile', { user: req.user, lazadauser: res.locals.lazadauser });
+	res.render('profile', { user: req.user, lazadauser: req.session.lazadaUsers });
 });
 
 module.exports = router;
