@@ -13,10 +13,9 @@ const authCheck = (req, res, next) => {
 const lazadaUsercheck = (req, res, next) => {
 	if (req.session.result) {
 		res.locals.lazadauser = req.session.result;
-		// req.session.result = null;
+		req.session.result = null;
 		next();
 	} else {
-		res.locals.lazadauser = null;
 		next();
 	}
 };
