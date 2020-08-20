@@ -14,7 +14,7 @@ const lazadaUsercheck = (req, res, next) => {
 	if (req.session.lazadaUsers) {
 		const lazUser = req.session.lazadaUsers;
 		res.locals.lazadauser = lazUser;
-		console(res.locals.lazadauser + '------------------->');
+		console.log(res.locals.lazadauser + '------------------->');
 		req.session.result = null;
 		next();
 	} else {
