@@ -15,7 +15,7 @@ const lazadaUsercheck = (req, res, next) => {
 		const lazUser = req.session.lazadaUsers;
 		res.locals.lazadauser = lazUser;
 		console.log(res.locals.lazadauser + '------------------->');
-		req.session.result = null;
+		req.session.lazadaUsers = null;
 		next();
 	} else {
 		next();
@@ -25,7 +25,7 @@ const lazadaUsercheck = (req, res, next) => {
 router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
 	//res.send("Greetings, " + req.user.username + "! you are logged in. ");
 	// let lazadaUser = req.session.result;
-
+	console.log(res.locals.lazadauser);
 	const lazada = res.locals.lazadauser;
 	console.log(lazada);
 	res.render('profile', { user: req.user, lazadauser: lazada });
