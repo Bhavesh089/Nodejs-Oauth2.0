@@ -23,7 +23,7 @@ const authCheck = (req, res, next) => {
 // 	}
 // };
 
-router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
+router.get('/', authCheck, (req, res, next) => {
 	//res.send("Greetings, " + req.user.username + "! you are logged in. ");
 	// let lazadaUser = req.session.result;
 	// console.log(res.locals.lazadauser);
