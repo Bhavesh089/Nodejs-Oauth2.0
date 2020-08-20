@@ -42,6 +42,7 @@
   <body>
     <nav>
       <ul>
+        <% if(lazadauser) { %>
         <% if(user) { %>
         <li><a href="/auth/logout">Logout</a></li>
         <% } else { %>
@@ -53,15 +54,27 @@
       </ul>
     </nav>
     <header>
-      <% if(lazadauser) { %>
       <h1>Lazada Seller Dashboard</h1>
       <h2>hello, <%= user.username %></h2>
-      <% } else { %>
-        <h1>Lazada Seller Dashboard</h1>
-        <h2>hello, <%= user.username %></h2>
-        <a href="/auth/lazada">Lazada</a>
-        <% } %>
+      <!-- <a href="/auth/lazada">Lazada</a> -->
     </header>
+    <% } else { %>
+      <% if(user) { %>
+        <li><a href="/auth/logout">Logout</a></li>
+        <% } else { %>
+        <li><a href="/auth/login">Login</a></li>
+        <% } %>
+        <li><a href="/">Home</a></li>
+        <li><a href="/profile">Dashboard</a></li>
+        
+      </ul>
+    </nav>
+    <header>
+      <h1>Lazada Seller Dashboard</h1>
+      <h2>hello, <%= user.username %></h2>
+      <a href="/auth/lazada">Lazada</a>
+    </header>
+    <% } 
     <main>
       <p>
         Thank you for your interest! Please check back later!
