@@ -107,7 +107,6 @@ router.get(
 						if (currentUser) {
 							// already have the user
 							console.log('user is: ' + currentUser);
-							req.session.lazadaUsers = { lazadaUser: currentUser.account };
 							res.redirect('/profile/');
 							// done(null, currentUser);
 						} else {
@@ -124,8 +123,6 @@ router.get(
 								.save()
 								.then((lazadaUser) => {
 									console.log('new user created: ' + lazadaUser.account + '-------------->');
-
-									req.session.lazadaUsers = { lazadaUser: lazadaUser.account };
 									res.redirect('/profile/');
 								})
 								.catch((err) =>
