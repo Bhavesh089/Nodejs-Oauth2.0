@@ -12,7 +12,9 @@ const authCheck = (req, res, next) => {
 
 const lazadaUsercheck = (req, res, next) => {
 	if (req.session.result) {
-		res.locals.lazadauser = req.session.result;
+		const lazUser = req.session.result;
+		console(lazUser + '--------->lazuser');
+		res.locals.lazadauser = lazUser;
 		console(res.locals.lazadauser + '------------------->');
 		req.session.result = null;
 		next();
@@ -26,7 +28,7 @@ router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
 	// let lazadaUser = req.session.result;
 
 	const lazada = res.locals.lazadauser;
-	console.log(lazada);
+	console.log(lazada + '----------->');
 	res.render('profile', { user: req.user, lazadauser: lazada });
 });
 
