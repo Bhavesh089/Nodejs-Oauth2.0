@@ -13,8 +13,8 @@ const authCheck = (req, res, next) => {
 router.get('/', authCheck, (req, res) => {
 	//res.send("Greetings, " + req.user.username + "! you are logged in. ");
 	let lazadaUser = req.session.result;
-	console.log(lazadaUser);
-	res.render('profile', { user: req.user });
+	console.log(JSON.parse(lazadaUser));
+	res.render('profile', { user: req.user, lazadauser: lazadaUser });
 });
 
 module.exports = router;

@@ -121,7 +121,8 @@ router.get(
 							})
 								.save()
 								.then((lazadaUser) => {
-									console.log('new user created: ' + lazadaUser);
+									console.log('new user created: ' + lazadaUser.account + '-------------->');
+
 									req.session.result = { lazadaUser: lazadaUser.account };
 								})
 								.catch((err) =>
