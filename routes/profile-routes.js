@@ -12,7 +12,7 @@ const authCheck = (req, res, next) => {
 
 const lazadaUsercheck = (req, res, next) => {
 	if (req.session.result) {
-		res.locals.lazadauser = req.session.result;
+		res.locals.lazadauser = req.session.lazadaUsers;
 		next();
 	} else {
 		next();

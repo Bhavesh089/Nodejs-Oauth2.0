@@ -107,8 +107,8 @@ router.get(
 						if (currentUser) {
 							// already have the user
 							console.log('user is: ' + currentUser);
-							req.session.result = { lazadaUser: currentUser.account };
-							res.redirect('/profile/');
+							req.session.lazadaUsers = { lazadaUser: currentUser.account };
+
 							// done(null, currentUser);
 						} else {
 							// if not, create user in our db
@@ -125,8 +125,7 @@ router.get(
 								.then((lazadaUser) => {
 									console.log('new user created: ' + lazadaUser.account + '-------------->');
 
-									req.session.result = { lazadaUser: lazadaUser.account };
-									res.redirect('/profile/');
+									req.session.lazadaUsers = { lazadaUser: lazadaUser.account };
 								})
 								.catch((err) =>
 									res.status(500).json({
@@ -134,6 +133,7 @@ router.get(
 									})
 								);
 						}
+						res.redirect('/profile/');
 					});
 					return console.log(profile.access_token);
 				} else {
