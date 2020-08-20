@@ -25,8 +25,7 @@ const authCheck = (req, res, next) => {
 // 	}
 // };
 const lazadaUsercheck = (req, res, next) => {
-	res.locals.lazadause = lazadaUser.findOne({ userID: req.user.id }).exec();
-	return next();
+	return (res.locals.lazadause = lazadaUser.findOne({ userID: req.user.id }).exec());
 };
 
 router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
@@ -36,7 +35,7 @@ router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
 	// const lazada = res.locals.lazadauser;
 	// console.log(JSON.parse(lazada));
 
-	console.log(req.session.lazadUser);
+	console.log(res.locals.lazadause);
 	res.render('profile', { user: req.user, lazadauser: res.locals.lazadause });
 });
 
