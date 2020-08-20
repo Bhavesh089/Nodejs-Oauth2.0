@@ -3,6 +3,7 @@ const passport = require('passport');
 const router = express.Router();
 // const lazadaRedirect_controller = require('../Controllers/Redirect');
 const lazadaUser = require('../models/lazadaUser-model');
+const session = require('express-session');
 var request = require('request');
 // const keys = require('../config/keys');
 // const crypto = require('crypto');
@@ -80,7 +81,7 @@ const authCheck = (req, res, next) => {
 router.get(
 	'/lazada/redirect',
 	authCheck,
-	(req, res, next) => {
+	(req, res) => {
 		const userId = res.locals.user;
 		console.log('------------------------------------>');
 		console.log(userId);
@@ -121,7 +122,7 @@ router.get(
 								.save()
 								.then((lazadaUser) => {
 									console.log('new user created: ' + lazadaUser);
-									next(null, lazadaUser);
+									req.session.result = { lazadaUser: lazadaUser.account };
 								})
 								.catch((err) =>
 									res.status(500).json({
