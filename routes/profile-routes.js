@@ -25,9 +25,7 @@ const authCheck = (req, res, next) => {
 // 	}
 // };
 const lazadaUsercheck = (req, res, next) => {
-	res.locals.lazadause = lazadaUser.findOne({ userID: req.user.id }).exec().then((result) => {
-		return result;
-	});
+	res.locals.lazadause = lazadaUser.findOne({ userID: req.user.id }).exec();
 	return next();
 };
 
