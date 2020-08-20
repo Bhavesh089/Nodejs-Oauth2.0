@@ -27,7 +27,7 @@ router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
 	// let lazadaUser = req.session.result;
 	console.log(res.locals.lazadauser);
 	const lazada = res.locals.lazadauser;
-	console.log(lazada);
+	console.log(JSON.parse(lazada));
 	res.render('profile', { user: req.user, lazadauser: lazada });
 });
 
