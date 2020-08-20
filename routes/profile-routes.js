@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const lazadaUser = require('../models/lazadaUser-model');
+
 const authCheck = (req, res, next) => {
 	if (!req.user) {
 		// if user not logged in
@@ -11,13 +13,17 @@ const authCheck = (req, res, next) => {
 };
 
 const lazadaUsercheck = (req, res, next) => {
-	if (req.session.result) {
-		res.locals.lazadauser = req.session.result;
-		req.session.result = null;
-		next();
-	} else {
-		next();
-	}
+	// if (req.session.result)
+	console.log(req.session.result.lazadaUser);
+	lazadaUser.findOne({ account: req.session.result.lazadaUser }).then((currentUser) => {
+		if (currentUser) {
+			res.locals.lazadauser = currentUser.account;
+			// req.session.result = null;
+			next();
+		} else {
+			next();
+		}
+	});
 };
 
 router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
