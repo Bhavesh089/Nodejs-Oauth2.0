@@ -124,6 +124,7 @@ router.get(
 									console.log('new user created: ' + lazadaUser.account + '-------------->');
 
 									req.session.result = { lazadaUser: lazadaUser.account };
+									res.redirect('/profile/');
 								})
 								.catch((err) =>
 									res.status(500).json({
@@ -140,7 +141,6 @@ router.get(
 			}
 		);
 		// console.log(res.status(200).json({ code: code }));
-		res.redirect('/profile/');
 	}
 
 	// passport.authenticate('oauth2'),
