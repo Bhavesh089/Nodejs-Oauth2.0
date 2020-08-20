@@ -13,7 +13,8 @@ const authCheck = (req, res, next) => {
 
 router.get('/', authCheck, (req, res) => {
 	//res.send("Greetings, " + req.user.username + "! you are logged in. ");
-	let lazadaUser = console.log(JSON.parse(req.lazadauser.account));
+	let lazadaUser = JSON.parse(req.lazadauser);
+	console.log(lazadaUser);
 	res.render('profile', { user: req.user });
 });
 
