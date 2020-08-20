@@ -14,7 +14,7 @@ const authCheck = (req, res, next) => {
 
 const lazadaUsercheck = (req, res, next) => {
 	// if (req.session.result)
-	console.log(req.session.result.lazadaUser);
+	console.log(req.session.result + '------>');
 	lazadaUser.findOne({ account: req.session.result.lazadaUser }).then((currentUser) => {
 		if (currentUser) {
 			res.locals.lazadauser = currentUser.account;
