@@ -107,6 +107,8 @@ router.get(
 						if (currentUser) {
 							// already have the user
 							console.log('user is: ' + currentUser);
+							req.session.result = { lazadaUser: currentUser.account };
+							res.redirect('/profile/');
 							// done(null, currentUser);
 						} else {
 							// if not, create user in our db
