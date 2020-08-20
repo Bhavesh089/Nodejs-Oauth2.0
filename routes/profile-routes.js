@@ -13,6 +13,7 @@ const authCheck = (req, res, next) => {
 const lazadaUsercheck = (req, res, next) => {
 	if (req.session.result) {
 		res.locals.lazadauser = req.session.result;
+		console(res.locals.lazadauser + '------------------->');
 		req.session.result = null;
 		next();
 	} else {
@@ -23,8 +24,10 @@ const lazadaUsercheck = (req, res, next) => {
 router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
 	//res.send("Greetings, " + req.user.username + "! you are logged in. ");
 	// let lazadaUser = req.session.result;
-	console.log(res.locals.lazadauser);
-	res.render('profile', { user: req.user, lazadauser: res.locals.lazadauser });
+
+	const lazada = res.locals.lazadauser;
+	console.log(lazada);
+	res.render('profile', { user: req.user, lazadauser: lazada });
 });
 
 module.exports = router;
