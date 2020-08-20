@@ -16,11 +16,12 @@ const lazadaUsercheck = (req, res, next) => {
 		req.session.result = null;
 		next(result);
 	} else {
-		next();
+		result = null;
+		next(result);
 	}
 };
 
-router.get('/', authCheck, lazadaUsercheck, (req, res, next, result) => {
+router.get('/', authCheck, lazadaUsercheck, (result, req, res, next) => {
 	//res.send("Greetings, " + req.user.username + "! you are logged in. ");
 	// let lazadaUser = req.session.result;
 	console.log(result);
