@@ -5,7 +5,7 @@ const lazadaUser = require('../models/lazadaUser-model');
 const authCheck = (req, res, next) => {
 	if (!req.user) {
 		// if user not logged in
-		res.redirect('/auth/login');
+		res.redirect('/auth/home');
 	} else {
 		// if logged in
 		next();

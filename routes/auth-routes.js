@@ -41,10 +41,15 @@ router.get(
 	})
 );
 
+// router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
+// 	//res.send(req.user);
+// 	console.log(res);
+// 	res.redirect('/profile/');
+// });
 router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
 	//res.send(req.user);
 	console.log(res);
-	res.redirect('/profile/');
+	res.redirect('/signup/');
 });
 
 // router.post('/profile', passport.authenticate('oauth2'), passport.authenticate('hmac'), (req, res) => {
