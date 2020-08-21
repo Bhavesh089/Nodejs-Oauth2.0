@@ -36,12 +36,12 @@ router.get('signup/google/redirect', passport.authenticate('googleSignup'), (req
 
 router.get(
 	'login/google',
-	passport.authenticate('google', {
+	passport.authenticate('googleLogin', {
 		scope: [ 'profile' ]
 	})
 );
 
-router.get('login/google/redirect', passport.authenticate('google'), (req, res) => {
+router.get('login/google/redirect', passport.authenticate('googleLogin'), (req, res) => {
 	//res.send(req.user);
 	res.redirect('/profile/');
 });
