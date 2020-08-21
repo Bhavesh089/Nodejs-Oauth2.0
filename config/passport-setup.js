@@ -30,6 +30,7 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(
+	'facebookSignup',
 	new FacebookStrategy(
 		{
 			clientID: keys.facebook.clientID,
