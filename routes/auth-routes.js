@@ -46,11 +46,17 @@ router.get(
 // 	console.log(res);
 // 	res.redirect('/profile/');
 // });
-router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
-	//res.send(req.user);
-	console.log(res);
-	res.redirect('/signup/');
-});
+router.get(
+	'/facebook/redirect',
+	passport.authenticate('facebook', {
+		callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/facebook/redirect'
+	}),
+	(req, res) => {
+		//res.send(req.user);
+		console.log(res);
+		res.redirect('/signup/');
+	}
+);
 
 // router.post('/profile', passport.authenticate('oauth2'), passport.authenticate('hmac'), (req, res) => {
 // 	res.json(req.user);
