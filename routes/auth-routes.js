@@ -22,51 +22,51 @@ router.get('/logout', (req, res) => {
 
 // auth with google
 router.get(
-	'signup/google',
+	'/signup/google',
 	passport.authenticate('googleSignup', {
 		scope: [ 'profile' ]
 	})
 );
 
 // callback route for google to redirect to
-router.get('signup/google/redirect', passport.authenticate('googleSignup'), (req, res) => {
+router.get('/signup/google/redirect', passport.authenticate('googleSignup'), (req, res) => {
 	//res.send(req.user);
 	res.redirect('/signup/');
 });
 
 router.get(
-	'login/google',
+	'/login/google',
 	passport.authenticate('googleLogin', {
 		scope: [ 'profile' ]
 	})
 );
 
-router.get('login/google/redirect', passport.authenticate('googleLogin'), (req, res) => {
+router.get('/login/google/redirect', passport.authenticate('googleLogin'), (req, res) => {
 	//res.send(req.user);
 	res.redirect('/profile/');
 });
 
 router.get(
-	'signup/facebook',
+	'/signup/facebook',
 	passport.authenticate('facebookSignup', {
 		scope: [ 'public_profile' ]
 	})
 );
 
-router.get('signup/facebook/redirect', passport.authenticate('facebookSignup'), (req, res) => {
+router.get('/signup/facebook/redirect', passport.authenticate('facebookSignup'), (req, res) => {
 	//res.send(req.user);
 	// console.log(res.json() + '---------->');
 	res.redirect('/signup/');
 });
 
 router.get(
-	'login/facebook',
+	'/login/facebook',
 	passport.authenticate('facebookLogin', {
 		scope: [ 'public_profile' ]
 	})
 );
 
-router.get('login/facebook/redirect', passport.authenticate('facebookLogin'), (req, res) => {
+router.get('/login/facebook/redirect', passport.authenticate('facebookLogin'), (req, res) => {
 	//res.send(req.user);
 	console.log(res);
 	res.redirect('/profile/');
