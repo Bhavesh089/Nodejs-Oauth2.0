@@ -48,7 +48,7 @@ router.get(
 // });
 router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
 	//res.send(req.user);
-	console.log(res + 'redirect ---------------------->');
+	console.log(JSON.stringify(res) + '---------->');
 	res.redirect('/signup/');
 });
 
