@@ -36,7 +36,7 @@ passport.use(
 			clientID: keys.facebook.clientID,
 			clientSecret: keys.facebook.clientSecret,
 			// callbackURL: 'http://localhost:3000/auth/facebook/redirect'
-			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/facebook/redirect'
+			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/signup/facebook/redirect'
 		},
 		function(accessToken, refreshToken, profile, done) {
 			// check if user already exists in our db
@@ -64,10 +64,45 @@ passport.use(
 );
 
 passport.use(
+	'facebookLogin',
+	new FacebookStrategy(
+		{
+			clientID: keys.facebook.clientID,
+			clientSecret: keys.facebook.clientSecret,
+			// callbackURL: 'http://localhost:3000/auth/facebook/redirect'
+			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/login/facebook/redirect'
+		},
+		function(accessToken, refreshToken, profile, done) {
+			// check if user already exists in our db
+			console.log(profile);
+			User.findOne({ facebookId: profile.id }).then((currentUser) => {
+				if (currentUser) {
+					// already have the user
+					console.log('user is: ' + currentUser);
+					done(null, currentUser);
+				} else {
+					// if not, create user in our db
+					new User({
+						username: profile.displayName,
+						facebookId: profile.id
+					})
+						.save()
+						.then((newUser) => {
+							console.log('new user created: ' + newUser);
+							done(null, newUser);
+						});
+				}
+			});
+		}
+	)
+);
+
+passport.use(
+	'googleSignup',
 	new GoogleStrategy(
 		{
 			// options for the google strategy
-			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/google/redirect',
+			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/signup/google/redirect',
 			clientID: keys.google.clientID,
 			clientSecret: keys.google.clientSecret
 		},
@@ -95,6 +130,38 @@ passport.use(
 	)
 );
 
+passport.use(
+	'googleLogin',
+	new GoogleStrategy(
+		{
+			// options for the google strategy
+			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/login/google/redirect',
+			clientID: keys.google.clientID,
+			clientSecret: keys.google.clientSecret
+		},
+		(accessToken, refreshToken, profile, done) => {
+			// check if user already exists in our db
+			User.findOne({ googleId: profile.id }).then((currentUser) => {
+				if (currentUser) {
+					// already have the user
+					console.log('user is: ' + currentUser);
+					done(null, currentUser);
+				} else {
+					// if not, create user in our db
+					new User({
+						username: profile.displayName,
+						googleId: profile.id
+					})
+						.save()
+						.then((newUser) => {
+							console.log('new user created: ' + newUser);
+							done(null, newUser);
+						});
+				}
+			});
+		}
+	)
+);
 // passport.use(
 // 	new HmacStrategy(function(publicKey, done) {
 // 		User.findOne({ publicKey: publicKey }, function(err, user) {
