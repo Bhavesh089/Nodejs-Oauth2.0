@@ -36,7 +36,7 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 
 router.get(
 	'/facebook',
-	passport.authenticate('facebook', {
+	passport.authenticate('facebookSignup', {
 		scope: [ 'public_profile' ]
 	})
 );
@@ -48,7 +48,7 @@ router.get(
 // });
 router.get('/facebook/redirect', passport.authenticate('facebookSignup'), (req, res) => {
 	//res.send(req.user);
-	console.log(res.json() + '---------->');
+	// console.log(res.json() + '---------->');
 	res.redirect('/signup/');
 });
 
