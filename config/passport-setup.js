@@ -117,7 +117,8 @@ passport.use(
 					// if not, create user in our db
 					new User({
 						username: profile.displayName,
-						googleId: profile.id
+						googleId: profile.id,
+						userEmail: profile.emails[0].value
 					})
 						.save()
 						.then((newUser) => {
@@ -150,7 +151,8 @@ passport.use(
 					// if not, create user in our db
 					new User({
 						username: profile.displayName,
-						googleId: profile.id
+						googleId: profile.id,
+						userEmail: profile.emails[0].value
 					})
 						.save()
 						.then((newUser) => {
