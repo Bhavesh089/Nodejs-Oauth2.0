@@ -135,14 +135,22 @@ router.get(
 							res.redirect('/profile/');
 							// done(null, currentUser);
 						} else {
+							let UserInfoSchema = {
+								country: profile.country_user_info[0]['country'],
+								user_id: profile.country_user_info[0]['country'],
+								seller_id: profile.country_user_info[0]['seller_id'],
+								short_code: profile.country_user_info[0]['short_code']
+							};
 							// if not, create user in our db
 							new lazadaUser({
 								access_token: profile.access_token,
+								country: profile.country,
 								refresh_token: profile.refresh_token,
 								refresh_expires_in: profile.refresh_expires_in,
 								expires_in: profile.expires_in,
-								seller_id: profile.country_user_info[0]['seller_id'],
+								// seller_id: profile.country_user_info[0]['seller_id'],
 								account: profile.account,
+								country_user_info: [ UserInfoSchema ],
 								userId: userId
 							})
 								.save()
