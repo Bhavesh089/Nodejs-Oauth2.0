@@ -40,4 +40,4 @@ var TokenSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-mongoose.model('Token', TokenSchema);
+module.exports = mongoose.model('Token', TokenSchema);
