@@ -108,9 +108,9 @@ passport.use(
 		},
 		(accessToken, refreshToken, profile, done) => {
 			// check if user already exists in our db
-			console.log(profile._json.email);
-			console.log('---->');
-			console.log(profile.emails[0].value);
+			console.log(accessToken);
+			console.log('--->');
+			console.log(profile);
 			User.findOne({ googleId: profile.id }).then((currentUser) => {
 				if (currentUser) {
 					// already have the user
@@ -121,7 +121,7 @@ passport.use(
 					new User({
 						username: profile.displayName,
 						googleId: profile.id,
-						userEmail: profile._json.email
+						userEmail: profile.emails[0].value
 					})
 						.save()
 						.then((newUser) => {
@@ -154,7 +154,8 @@ passport.use(
 					// if not, create user in our db
 					new User({
 						username: profile.displayName,
-						googleId: profile.id
+						googleId: profile.id,
+						userEmail: profile.emails[0].value
 					})
 						.save()
 						.then((newUser) => {
