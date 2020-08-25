@@ -31,7 +31,6 @@ const lazadaUsercheck = (req, res, next) => {
 			console.log(res.locals.lazadauser);
 			return next();
 		} else {
-			res.locals.lazadauser = null;
 			console.log(res.locals.lazadauser);
 			return next();
 		}
