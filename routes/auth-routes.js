@@ -37,7 +37,7 @@ router.get('/signup/google/redirect', passport.authenticate('googleSignup'), (re
 router.get(
 	'/login/google',
 	passport.authenticate('googleLogin', {
-		scope: [ 'profile' ]
+		scope: [ 'profile', 'email' ]
 	})
 );
 
