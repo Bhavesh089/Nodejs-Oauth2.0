@@ -31,7 +31,7 @@ const lazadaUsercheck = (req, res, next) => {
 			console.log(res.locals.lazadauser);
 			return next();
 		} else {
-			res.locals.lazadause = null;
+			res.locals.lazadauser = null;
 			console.log(res.locals.lazadauser);
 			return next();
 		}
@@ -39,7 +39,7 @@ const lazadaUsercheck = (req, res, next) => {
 };
 
 router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
-	console.log(res.locals.lazadause);
+	console.log(res.locals.lazadauser);
 	res.render('profile', { user: req.user, lazadauser: res.locals.lazadauser });
 });
 
