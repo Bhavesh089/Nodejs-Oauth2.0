@@ -119,7 +119,7 @@ passport.use(
 					new User({
 						username: profile.displayName,
 						googleId: profile.id,
-						userEmail: profile.emails[0]['value']
+						userEmail: profile._json.email
 					})
 						.save()
 						.then((newUser) => {
