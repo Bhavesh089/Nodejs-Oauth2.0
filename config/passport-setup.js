@@ -106,11 +106,11 @@ passport.use(
 			clientID: keys.google.clientID,
 			clientSecret: keys.google.clientSecret
 		},
-		(accessToken, refreshToken, profile, email, done) => {
+		(accessToken, refreshToken, profile, done) => {
 			// check if user already exists in our db
 			console.log(profile);
 			console.log('--------->');
-			console.log(email);
+			console.log(accessToken);
 			User.findOne({ googleId: profile.id }).then((currentUser) => {
 				if (currentUser) {
 					// already have the user
@@ -120,7 +120,8 @@ passport.use(
 					// if not, create user in our db
 					new User({
 						username: profile.displayName,
-						googleId: profile.id
+						googleId: profile.id,
+						userEmail: profile.emails[0]['value']
 					})
 						.save()
 						.then((newUser) => {

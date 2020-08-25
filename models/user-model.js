@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
 	username: String,
 	googleId: String,
-	facebookId: String
+	facebookId: String,
+	userEmail: String
 });
 
 const User = mongoose.model('user', userSchema);
