@@ -35,7 +35,8 @@ var TokenSchema = new mongoose.Schema(
 		account: String,
 		code: String,
 		request_id: String,
-		created_datetime: Date
+		created_datetime: Date,
+		userId: String
 	},
 	{ timestamps: true }
 );
