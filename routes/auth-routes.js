@@ -128,7 +128,7 @@ router.get(
 				if (response.statusCode === 200) {
 					let profile = JSON.parse(body);
 					console.log(profile.country_user_info[0]['seller_id']);
-					lazadaUser.findOne({ seller_id: profile.country_user_info[0]['seller_id'] }).then((currentUser) => {
+					lazadaUser.findOne({ account: profile.account }).then((currentUser) => {
 						if (currentUser) {
 							// already have the user
 							console.log('user is: ' + currentUser);
@@ -148,7 +148,7 @@ router.get(
 								refresh_token: profile.refresh_token,
 								refresh_expires_in: profile.refresh_expires_in,
 								expires_in: profile.expires_in,
-								// seller_id: profile.country_user_info[0]['seller_id'],
+								seller_id: profile.country_user_info[0]['seller_id'],
 								account: profile.account,
 								country_user_info: [ UserInfoSchema ],
 								userId: userId
