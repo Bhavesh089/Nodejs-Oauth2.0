@@ -37,7 +37,7 @@ var TokenSchema = new mongoose.Schema(
 		request_id: String,
 		created_datetime: Date,
 		userId: String,
-		date: { type: Date, default: +new Date() + this.expires_in }
+		expire_accesstoken: String
 	},
 	{ timestamps: true }
 );
