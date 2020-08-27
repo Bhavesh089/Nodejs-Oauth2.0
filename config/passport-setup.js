@@ -50,7 +50,8 @@ passport.use(
 					// if not, create user in our db
 					new User({
 						username: profile.displayName,
-						facebookId: profile.id
+						facebookId: profile.id,
+						userEmail: profile.emails[0].value
 					})
 						.save()
 						.then((newUser) => {
@@ -85,7 +86,8 @@ passport.use(
 					// if not, create user in our db
 					new User({
 						username: profile.displayName,
-						facebookId: profile.id
+						facebookId: profile.id,
+						userEmail: profile.emails[0].value
 					})
 						.save()
 						.then((newUser) => {
