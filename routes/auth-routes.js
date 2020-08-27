@@ -2,7 +2,6 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 const lazadaUser = require('../models/lazadaUser-model');
-var request = require('request');
 const authController = require('../Controllers/auth-controller');
 //Login page route
 router.get('/login', (req, res) => {
@@ -78,7 +77,7 @@ router.get('/login/facebook/redirect', passport.authenticate('facebookLogin'), (
 router.get('/lazada', passport.authenticate('oauth2'));
 
 //Lazada callback route
-router.get('/lazada/redirect', authController.authCheck, authController.lazadaRedirect);
+router.get('/lazada/redirect', authController.authCheck, authController.lazadaGet_token);
 
 router.get(
 	'/lazada/renewToken',

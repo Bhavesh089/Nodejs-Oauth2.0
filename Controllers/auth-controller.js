@@ -9,13 +9,12 @@ exports.authCheck = (req, res, next) => {
 	} else {
 		// if logged in
 		res.locals.user = req.user.id;
-		console.log('************');
 		console.log(res.locals.user);
 		next();
 	}
 };
 
-exports.lazadaRedirect = (req, res) => {
+exports.lazadaGet_token = (req, res) => {
 	const userId = res.locals.user;
 	console.log(userId);
 
