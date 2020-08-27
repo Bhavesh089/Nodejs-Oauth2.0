@@ -59,7 +59,7 @@ exports.lazadaGet_token = (req, res) => {
 						account: profile.account,
 						country_user_info: [ UserInfoSchema ],
 						userId: userId,
-						expire_accesstoken: new Date.now()
+						expire_accesstoken: Date(Date.now())
 						// expire_accesstoken: new Date(+new Date() + profile.expires_in * 1000)
 					})
 						.save()
