@@ -47,7 +47,7 @@ router.get('/login/google/redirect', passport.authenticate('googleLogin'), (req,
 router.get(
 	'/signup/facebook',
 	passport.authenticate('facebookSignup', {
-		scope: [ 'public_profile' ]
+		scope: [ 'public_profile', 'email' ]
 	})
 );
 
@@ -62,7 +62,7 @@ router.get('/signup/facebook/redirect', passport.authenticate('facebookSignup'),
 router.get(
 	'/login/facebook',
 	passport.authenticate('facebookLogin', {
-		scope: [ 'public_profile' ]
+		scope: [ 'public_profile', 'email' ]
 	})
 );
 
