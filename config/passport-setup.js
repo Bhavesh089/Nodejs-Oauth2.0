@@ -5,20 +5,6 @@ const OAuth2Strategy = require('passport-oauth2');
 const keys = require('./keys.js');
 const User = require('../models/user-model');
 
-// const secret = keys.lazada.clientSecret;
-// var message = (appkey, sign_method) => {
-// 	const msg = [ appkey, sign_method ];
-// 	sorting = sort(msg);
-// };
-
-// var hash = crypto.createHmac('sha256', secret).update(message);
-
-// // to lowercase hexits
-// hash.digest('hex');
-
-// // to base64
-// hash.digest('base64');
-
 passport.serializeUser((user, done) => {
 	done(null, user.id);
 });
