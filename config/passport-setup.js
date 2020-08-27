@@ -153,19 +153,6 @@ passport.use(
 		}
 	)
 );
-// passport.use(
-// 	new HmacStrategy(function(publicKey, done) {
-// 		User.findOne({ publicKey: publicKey }, function(err, user) {
-// 			if (err) {
-// 				return done(err);
-// 			}
-// 			if (!user) {
-// 				return done(null, false);
-// 			}
-// 			return done(null, user, privateKey);
-// 		});
-// 	})
-// );
 
 passport.use(
 	new OAuth2Strategy(

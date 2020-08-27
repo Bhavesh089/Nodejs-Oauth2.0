@@ -11,6 +11,7 @@ const authCheck = (req, res, next) => {
 	}
 };
 
+//Rendering signup page and passing required arguments.
 router.get('/', authCheck, (req, res, next) => {
 	res.render('signup', { user: req.user });
 });
