@@ -70,7 +70,8 @@ passport.use(
 			clientID: keys.facebook.clientID,
 			clientSecret: keys.facebook.clientSecret,
 			// callbackURL: 'http://localhost:3000/auth/facebook/redirect'
-			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/login/facebook/redirect'
+			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/login/facebook/redirect',
+			profileFields: [ 'id', 'email', 'displayName', 'photos' ]
 		},
 		function(accessToken, refreshToken, profile, done) {
 			// check if user already exists in our db
