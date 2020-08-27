@@ -1,9 +1,7 @@
 const express = require('express');
-//var fs = require("fs");
-//var https = require("https");
+const cron = require('node-cron');
 const app = express();
 const port = process.env.PORT || 3000;
-
 const authRoutes = require('./routes/auth-routes');
 const profileRoutes = require('./routes/profile-routes');
 const signupRoutes = require('./routes/signup-routes');
@@ -40,6 +38,18 @@ mongoose.connect(
 	}
 );
 
+// cron.schedule('* * * * *', async function() {
+// 	console.log('Running cron job 1 at ' + new Date(Date.now()).toString());
+// 	console.log('Fetching expired tokens...');
+// 	// call your function here
+
+// 	var curDateTime = new Date().toISOString();
+// 	console.log(curDateTime);
+// 	tokens = await Token.find({ created_datetime: curDateTime });
+// 	console.log(tokens);
+// 	console.log('Cron job 1 finished at ' + new Date(Date.now()).toString());
+// });
+
 // set up routes
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
@@ -60,6 +70,7 @@ app.get('/', (req, res) => {
 //   console.log("Go to https://localhost:3000/");
 // });
 
+//Port listening
 app.listen(port, () => {
 	console.log('app now listening for requests on port ' + port);
 });

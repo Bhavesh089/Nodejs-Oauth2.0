@@ -1,14 +1,10 @@
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
-// const lazadaRedirect_controller = require('../Controllers/Redirect');
 const lazadaUser = require('../models/lazadaUser-model');
-const sessions = require('express-session');
 var request = require('request');
-// const keys = require('../config/keys');
-// const crypto = require('crypto');
-// const utf8 = require('utf8');
-// auth login
+const authController = require('../Controllers/auth-controller');
+//Login page route
 router.get('/login', (req, res) => {
 	res.render('login', { user: req.user });
 });
@@ -20,7 +16,7 @@ router.get('/logout', (req, res) => {
 	res.redirect('/');
 });
 
-// auth with google
+// auth with googleSignup
 router.get(
 	'/signup/google',
 	passport.authenticate('googleSignup', {
@@ -28,12 +24,13 @@ router.get(
 	})
 );
 
-// callback route for google to redirect to
+// callback route for googleaSignup to redirect to
 router.get('/signup/google/redirect', passport.authenticate('googleSignup'), (req, res) => {
 	//res.send(req.user);
 	res.redirect('/signup/');
 });
 
+// auth with googlelogin
 router.get(
 	'/login/google',
 	passport.authenticate('googleLogin', {
@@ -41,11 +38,13 @@ router.get(
 	})
 );
 
+// callback route for googlelogin to redirect to
 router.get('/login/google/redirect', passport.authenticate('googleLogin'), (req, res) => {
 	//res.send(req.user);
 	res.redirect('/profile/');
 });
 
+// auth with facebook signup
 router.get(
 	'/signup/facebook',
 	passport.authenticate('facebookSignup', {
@@ -53,12 +52,14 @@ router.get(
 	})
 );
 
+// callback route for facebooksignup to redirect to
 router.get('/signup/facebook/redirect', passport.authenticate('facebookSignup'), (req, res) => {
 	//res.send(req.user);
 	// console.log(res.json() + '---------->');
 	res.redirect('/signup/');
 });
 
+//auth with facebooklogin
 router.get(
 	'/login/facebook',
 	passport.authenticate('facebookLogin', {
@@ -66,118 +67,18 @@ router.get(
 	})
 );
 
+// callback route for facebooklogin to redirect to
 router.get('/login/facebook/redirect', passport.authenticate('facebookLogin'), (req, res) => {
 	//res.send(req.user);
 	console.log(res);
 	res.redirect('/profile/');
 });
 
-// router.post('/profile', passport.authenticate('oauth2'), passport.authenticate('hmac'), (req, res) => {
-// 	res.json(req.user);
-// });
 // auth with lazada
 router.get('/lazada', passport.authenticate('oauth2'));
 
-// callback route for google to redirect to
-// router.get(
-// 	'/lazada/redirect',
-// 	lazadaRedirect_controller.lazadaRedirect,
-// 	(req, res) => {
-// 		console.log(res);
-// 		res.redirect('/profile/');
-// 	}
-
-// 	// passport.authenticate('oauth2'),
-// 	// wrap passport.authenticate call in a middleware function
-// );
-const authCheck = (req, res, next) => {
-	if (!req.user) {
-		// if user not logged in
-		res.redirect('/auth/login');
-	} else {
-		// if logged in
-		res.locals.user = req.user.id;
-		console.log('************');
-		console.log(res.locals.user);
-		next();
-	}
-};
-
-router.get(
-	'/lazada/redirect',
-	authCheck,
-	(req, res) => {
-		const userId = res.locals.user;
-		console.log('------------------------------------>');
-		console.log(userId);
-
-		console.log(req.query.code);
-		code = req.query.code;
-		propertiesObject = { code: code };
-
-		// request({ url: 'http://localhost:8000/CreateToken', qs: propertiesObject }, (err, response, body) => {
-		request(
-			{ url: 'https://lazada-server.herokuapp.com/CreateToken', qs: propertiesObject },
-			(err, response, body) => {
-				if (err) {
-					console.log(err);
-					return;
-				}
-
-				console.log(response.statusCode);
-				if (response.statusCode === 200) {
-					let profile = JSON.parse(body);
-					console.log(profile.country_user_info[0]['seller_id']);
-					lazadaUser.findOne({ account: profile.account }).then((currentUser) => {
-						if (currentUser) {
-							// already have the user
-							console.log('user is: ' + currentUser);
-							res.redirect('/profile/');
-							// done(null, currentUser);
-						} else {
-							let UserInfoSchema = {
-								country: profile.country_user_info[0]['country'],
-								user_id: profile.country_user_info[0]['country'],
-								seller_id: profile.country_user_info[0]['seller_id'],
-								short_code: profile.country_user_info[0]['short_code']
-							};
-							// if not, create user in our db
-							new lazadaUser({
-								access_token: profile.access_token,
-								country: profile.country,
-								refresh_token: profile.refresh_token,
-								refresh_expires_in: profile.refresh_expires_in,
-								expires_in: profile.expires_in,
-								seller_id: profile.country_user_info[0]['seller_id'],
-								account: profile.account,
-								country_user_info: [ UserInfoSchema ],
-								userId: userId
-							})
-								.save()
-								.then((lazadaUser) => {
-									console.log('new user created: ' + lazadaUser.account + '-------------->');
-									res.redirect('/profile/');
-								})
-								.catch((err) =>
-									res.status(500).json({
-										err: err
-									})
-								);
-						}
-					});
-					return console.log(profile.access_token);
-				} else {
-					return console.log(response.body);
-				}
-				//
-			}
-		);
-		// console.log(res.status(200).json({ code: code }));
-	}
-
-	// passport.authenticate('oauth2'),
-	// wrap passport.authenticate call in a middleware function
-);
+//Lazada callback route
+router.get('/lazada/redirect', authController.authCheck, authController.lazadaRedirect);
 
 router.get(
 	'/lazada/renewToken',
@@ -200,52 +101,55 @@ router.get(
 					let profile = JSON.parse(body);
 					console.log(profile);
 					console.log(profile.country_user_info_list[0]['seller_id']);
-					Lazada.findOne({
-						seller_id: profile.country_user_info_list[0]['seller_id']
-					}).then((currentUser) => {
-						if (currentUser) {
-							// already have the user
-							console.log('user is: ' + currentUser);
-							Lazada.update(
-								{ seller_id: profile.country_user_info_list[0]['seller_id'] },
-								{
-									$set: {
-										access_token: profile.access_token,
-										refresh_token: profile.refresh_token,
-										refresh_expires_in: profile.refresh_expires_in,
-										expires_in: profile.expires_in
-									}
-								}
-							)
-								.exec()
-								.then((result) => console.log(result))
-								.catch((err) => {
-									res.status(400).json({ err: err });
-								});
-							// done(null, currentUser);
-							// } else {
-							// 	// if not, create user in our db
-							// 	new Lazada({
-							// 		access_token: profile.access_token,
-							// 		refresh_token: profile.refresh_token,
-							// 		refresh_expires_in: profile.refresh_expires_in,
-							// 		expires_in: profile.expires_in,
-							// 		seller_id: profile.country_user_info[0]['seller_id'],
-							// 		account: profile.account
-							// 	})
-							// 		.save()
-							// 		.then((newUser) => {
-							// 			console.log('new user created: ' + newUser);
-							// 			// done(null, newUser);
-							// 		})
-							// 		.catch((err) =>
-							// 			response.status(404).json({
-							// 				err: err
-							// 			})
-							// 		);
-							//
-						}
-					});
+					lazadaUser
+						.findOne({
+							seller_id: profile.country_user_info_list[0]['seller_id']
+						})
+						.then((currentUser) => {
+							if (currentUser) {
+								// already have the user
+								console.log('user is: ' + currentUser);
+								lazadaUser
+									.update(
+										{ seller_id: profile.country_user_info_list[0]['seller_id'] },
+										{
+											$set: {
+												access_token: profile.access_token,
+												refresh_token: profile.refresh_token,
+												refresh_expires_in: profile.refresh_expires_in,
+												expires_in: profile.expires_in
+											}
+										}
+									)
+									.exec()
+									.then((result) => console.log(result))
+									.catch((err) => {
+										res.status(400).json({ err: err });
+									});
+								// done(null, currentUser);
+								// } else {
+								// 	// if not, create user in our db
+								// 	new Lazada({
+								// 		access_token: profile.access_token,
+								// 		refresh_token: profile.refresh_token,
+								// 		refresh_expires_in: profile.refresh_expires_in,
+								// 		expires_in: profile.expires_in,
+								// 		seller_id: profile.country_user_info[0]['seller_id'],
+								// 		account: profile.account
+								// 	})
+								// 		.save()
+								// 		.then((newUser) => {
+								// 			console.log('new user created: ' + newUser);
+								// 			// done(null, newUser);
+								// 		})
+								// 		.catch((err) =>
+								// 			response.status(404).json({
+								// 				err: err
+								// 			})
+								// 		);
+								//
+							}
+						});
 					return console.log(profile.access_token);
 				} else {
 					return console.log(response.body);

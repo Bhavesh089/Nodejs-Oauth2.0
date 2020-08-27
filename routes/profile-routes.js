@@ -12,25 +12,16 @@ const authCheck = (req, res, next) => {
 	}
 };
 
-// const lazadaUsercheck = (req, res, next) => {
-// 	if (req.session.lazadaUsers) {
-// 		const lazUser = req.session.lazadaUsers;
-// 		console.log(lazUser + 'laz_user');
-// 		res.locals.lazadauser = lazUser;
-// 		console.log(res.locals.lazadauser + '------------------->');
-// 		req.session.lazadaUsers = null;
-// 		next();
-// 	} else {
-// 		next();
-// 	}
-// };
 const lazadaUsercheck = (req, res, next) => {
+	//checking logged user in lazadaUser model
 	lazadaUser.findOne({ userId: req.user.id }).exec().then((result) => {
 		if (result) {
+			//if user present store it in local and pass next.
 			res.locals.lazadauser = result;
 			console.log(res.locals.lazadauser);
 			return next();
 		} else {
+			//if not null
 			res.locals.lazadauser = null;
 			console.log(res.locals.lazadauser);
 			return next();
@@ -39,6 +30,7 @@ const lazadaUsercheck = (req, res, next) => {
 };
 
 router.get('/', authCheck, lazadaUsercheck, (req, res, next) => {
+	//Rendering profile page and passing required arguments.
 	console.log(res.locals.lazadauser);
 	res.render('profile', { user: req.user, lazadauser: res.locals.lazadauser });
 });
