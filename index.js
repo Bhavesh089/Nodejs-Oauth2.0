@@ -76,7 +76,8 @@ app.use('/signup', signupRoutes);
 app.use('/register', registerRoutes);
 app.use('/ticket', express.static('views'));
 app.use('/orangeimg', express.static('views'));
-
+app.use('/assets', express.static('assets'));
+app.use('/loginassets', express.static('loginassets'));
 // create home route
 app.get('/', (req, res) => {
 	res.render('home', { user: req.user });
