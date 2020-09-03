@@ -19919,5 +19919,16 @@ Copyright (c) 2015 Daniel Eden
 	transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 2.2s cubic-bezier(0.4, 0, 0.2, 1);
 	will-change: box-shadow, transform;
 }
+@media only screen and (max-width: 320px) {
+	body {
+		font-size: larger;
+	}
+}
+div {
+	-webkit-background-size: contain no-repeat;
+	-moz-background-size: contain no-repeat;
+	-o-background-size: contain no-repeat;
+	background-size: contain no-repeat;
+}
 
 /*# sourceMappingURL=dashboard-free.css.map */
