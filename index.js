@@ -4,8 +4,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 const Token = require('./models/lazadaUser-model');
 const authRoutes = require('./routes/auth-routes');
-const profileRoutes = require('./routes/profile-routes');
+const connectRoutes = require('./routes/connect-routes');
 const signupRoutes = require('./routes/signup-routes');
+const profileRoutes = require('./routes/profile');
 const passport = require('passport');
 const passportSetup = require('./config/passport-setup');
 const mongoose = require('mongoose');
@@ -14,6 +15,7 @@ const cookieSession = require('cookie-session');
 const request = require('request');
 const cronjobController = require('./Controllers/cronjob-controller');
 const registerRoutes = require('./routes/Register');
+const analyticsRoutes = require('./routes/analytics-routes');
 // set up view engine
 app.set('view engine', 'ejs');
 
@@ -71,6 +73,7 @@ cron.schedule('* * * * *', async function() {
 
 // set up routes
 app.use('/auth', authRoutes);
+app.use('/connect', connectRoutes);
 app.use('/profile', profileRoutes);
 app.use('/signup', signupRoutes);
 app.use('/register', registerRoutes);
@@ -78,9 +81,10 @@ app.use('/ticket', express.static('views'));
 app.use('/orangeimg', express.static('views'));
 app.use('/assets', express.static('assets'));
 app.use('/loginassets', express.static('loginassets'));
+app.use('/analytics', analyticsRoutes);
 // create home route
 app.get('/', (req, res) => {
-	res.render('home', { user: req.user });
+	res.render('profile', { user: req.user });
 });
 
 //Port listening

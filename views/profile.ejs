@@ -16,15 +16,15 @@
 
 <body>
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white">
+    <div class="sidebar" data-color="fiogreen" data-background-color="white">
       <!--
       Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
       Tip 2: you can also add an image using data-image tag
   -->
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-          logo
+        <a href="https://www.fiolabs.ai/" class="simple-text logo-mini">
+          <img src="assets/img/Fio_Labs.png" alt="fio-labs"> 
         </a>
         <a href="http://www.creative-tim.com" class="simple-text logo-normal">
           CARE
@@ -33,27 +33,39 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="nav-item active  ">
-            <a class="nav-link" href="#0">
-              <i class="material-icons">Connect</i>
+            <a class="nav-link" href="/connect">
+              <!-- <i class="material-icons">Connect</i> -->
               <p>Connect</p>
             </a>
           </li>
           <li class="nav-item active  ">
             <a class="nav-link" href="#1">
-              <i class="material-icons">Acquire</i>
+              <!-- <i class="material-icons">Acquire</i> -->
               <p>Acquire</p>
             </a>
           </li>
           <li class="nav-item active  ">
             <a class="nav-link" href="#2">
-              <i class="material-icons">Retention</i>
+              <!-- <i class="material-icons">Retention</i> -->
               <p>Retention</p>
             </a>
           </li>
           <li class="nav-item active  ">
             <a class="nav-link" href="#3">
-              <i class="material-icons">Engagement</i>
+              <!-- <i class="material-icons">Engagement</i> -->
               <p>Engagement</p>
+            </a>
+          </li>
+          
+          <li class="nav-item active  ">
+            <a class="nav-link" href="/analytics">
+              <p>View Analytics</p>
+            </a>
+          </li>
+
+          <li class="nav-item active  ">
+            <a class="nav-link" href="/profile">
+              <p>User profile</p>
             </a>
           </li>
           <!-- your sidebar here -->
@@ -65,7 +77,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">Connect</a>
+            <a class="navbar-brand" href="javascript:;">User Profile</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -81,6 +93,20 @@
                 </a>
               </li>
               <!-- your navbar here -->
+              <li class="nav-item dropdown">
+                <a class="nav-link" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:;">
+                  <i class="material-icons">person</i> Bhavesh.k
+                  <p class="d-lg-none d-md-block">
+                    Account
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                  <a class="dropdown-item" href="/profile">Profile</a>
+                  <a class="dropdown-item" href="#">Settings</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Log out</a>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -89,26 +115,96 @@
       <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-          <div class="welcome-row">
-            <div class="row">
-              <h2 style="font-size: 50px;padding: 85px;">Thank you for Signing up for Beta program !</h2>
-              
+          <div class="col">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">Edit Profile</h4>
+                <p class="card-category">Complete your profile</p>
+              </div>
+              <div class="card-body">
+                <form>
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Username</label>
+                        <input type="text" class="form-control" value="Morlodenhof 7">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Bhavesh@fiolabs.ai</label>
+                        <input type="email" class="form-control" disabled>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Fist Name</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Last Name</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Address</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">City</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Country</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Postal Code</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>About Me</label>
+                        <div class="form-group">
+                          <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
+                          <textarea class="form-control" rows="5"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                  <div class="clearfix"></div>
+                </form>
+              </div>
             </div>
-            <!-- <div class="row">
-              <a class="btn btn-primary" class="lazada-btn" href="#">
-                <i class="glyphicon glyphicon-align-left"></i> Analytics </a>
-            </div> -->
+            <div class="row">
+              <div class="lazada">
+              <a class="btn btn-primary lazada-btn" href="#8">
+                <i class="material-icons">delete</i> Delete Account</a>
+                <a class="btn btn-primary lazada-btn" href="#">
+                  <i class="material-icons">turned_in</i> Subscribe </a></a>
+              </div>
+              </div>
           </div>
-          <div class="row">
-          <div class="lazada">
-            <h3>Connect Shops</h3>
-          <a class="btn btn-primary" class="lazada-btn" href="/auth/lazada">
-            <i class="glyphicon glyphicon-align-left"></i> Lazada </a>
-            <a class="btn btn-primary" class="lazada-btn" href="#">
-              <i class="glyphicon glyphicon-align-left"></i> Shopee </a>
-          </div>
-          </div>
-
+          
         </div>
       </div>
       <!-- <footer class="footer">
@@ -134,6 +230,18 @@
       </footer> -->
     </div>
   </div>
+  <script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
+  <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+  <script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+  <script src="assets/js/plugins/moment.min.js"></script>
+  <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
+  <script src="assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+  <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+  <script src="assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+  <!--  Google Maps Plugin    -->
+  <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+  <script src="assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+  <!-- <iframe  name:"lazada-d" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=8dfd9d3e-2881-44f2-aee0-e77bc8a17e3d&groupId=7e5ec3e1-cbb1-41e2-9679-b44429ac3a2c&autoAuth=true&ctid=4f06e6e8-ae4a-4b64-882a-792a2a921809&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWluZGlhLWNlbnRyYWwtYS1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9" frameborder="0" allowFullScreen="true" ></iframe> -->
 </body>
 
 </html>
