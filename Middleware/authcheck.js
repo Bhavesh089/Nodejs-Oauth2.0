@@ -1,8 +1,8 @@
-var jwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
 var secret = require('../config/keys');
 
-const authtokenCheck = getTokenFromHeader((req, res, next) => {
-	if ((req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') || req.user.accessToken) {
+exports.authtokenCheck = (req, res, next) => {
+	if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
 		const token = req.headers.authorization.split(' ')[1];
 		jwt.verify(token, secret.Jwt.secret, (err, user) => {
 			if (err) return res.sendStatus(403);
@@ -12,7 +12,7 @@ const authtokenCheck = getTokenFromHeader((req, res, next) => {
 	} else {
 		return res.sendStatus(401);
 	}
-});
+};
 
 // var auth = {
 //   required: jwt({
@@ -27,4 +27,3 @@ const authtokenCheck = getTokenFromHeader((req, res, next) => {
 //     getToken: getTokenFromHeader,
 //   }),
 // };
-module.exports = authtokenCheck;

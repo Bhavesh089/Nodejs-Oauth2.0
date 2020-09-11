@@ -40,7 +40,8 @@ router.get(
 // callback route for googlelogin to redirect to
 router.get('/login/google/redirect', passport.authenticate('googleLogin'), (req, res) => {
 	//res.send(req.user);
-	res.redirect('/connect/');
+	res.header('Authorization', 'Bearer ' + req.user.accesToken).redirect('/connect/');
+	// res.redirect('/connect/');
 });
 
 // auth with facebook signup
@@ -70,7 +71,7 @@ router.get(
 router.get('/login/facebook/redirect', passport.authenticate('facebookLogin'), (req, res) => {
 	//res.send(req.user);
 	console.log(res);
-	res.redirect('/connect/');
+	res.header('Authorization', 'Bearer ' + req.user.accesToken).redirect('/connect/');
 });
 
 // auth with lazada
