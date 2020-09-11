@@ -99,7 +99,7 @@ passport.use(
 			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/login/facebook/redirect',
 			profileFields: [ 'id', 'email', 'displayName', 'photos' ]
 		},
-		function(accessToken, refreshToken, profile, done) {
+		function(request, accessToken, refreshToken, profile, done) {
 			// check if user already exists in our db
 			console.log(profile);
 			console.log(accessToken);
@@ -170,7 +170,7 @@ passport.use(
 			clientID: keys.google.clientID,
 			clientSecret: keys.google.clientSecret
 		},
-		(accessToken, refreshToken, profile, done) => {
+		(request, accessToken, refreshToken, profile, done) => {
 			// check if user already exists in our db
 			User.findOne({ googleId: profile.id }).then((currentUser) => {
 				if (currentUser) {
