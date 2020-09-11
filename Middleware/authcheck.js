@@ -23,9 +23,10 @@ exports.authtokenCheck = (req, res, next) => {
 				req.user = user;
 				next();
 			});
-		} else if (req.user.accessToken) {
-			next();
 		} else {
+			// else if (req.user.accessToken) {
+			// 	next();
+			// }
 			return res.sendStatus(401);
 		}
 	} else {
