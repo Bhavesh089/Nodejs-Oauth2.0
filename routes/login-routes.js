@@ -7,10 +7,10 @@ router.post('/', function(req, res, next) {
 	const { email, password } = req.body;
 	console.log(req.body);
 	if (!email) {
-		return res.status(422).json({ errors: { email: "can't be blank" } });
+		return res.render('Register', { error_msg: "Email can't be blank" });
 	}
 	if (!password) {
-		return res.status(422).json({ errors: { password: "can't be blank" } });
+		return res.render('Register', { error_msg: "Password can't be blank" });
 	}
 	passport.authenticate('local', { failureRedirect: '/Register', session: false }, function(err, user, info) {
 		if (err) {
