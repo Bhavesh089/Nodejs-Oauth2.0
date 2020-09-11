@@ -1,7 +1,7 @@
 var jwt = require('express-jwt');
 var secret = require('../config/keys');
 
-const authCheck = getTokenFromHeader((req, res, next) => {
+const authtokenCheck = getTokenFromHeader((req, res, next) => {
 	if ((req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') || req.user.accessToken) {
 		const token = req.headers.authorization.split(' ')[1];
 		jwt.verify(token, secret.Jwt.secret, (err, user) => {
@@ -27,4 +27,4 @@ const authCheck = getTokenFromHeader((req, res, next) => {
 //     getToken: getTokenFromHeader,
 //   }),
 // };
-module.exports = authCheck;
+module.exports = authtokenCheck;
