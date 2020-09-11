@@ -2,8 +2,10 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 const FacebookStrategy = require('passport-facebook');
 const OAuth2Strategy = require('passport-oauth2');
+const LocalStrategy = require('passport-local').Strategy;
 const keys = require('./keys.js');
 const User = require('../models/user-model');
+// const bcrypt = require('bcrypt');
 
 passport.serializeUser((user, done) => {
 	done(null, user.id);
@@ -14,6 +16,43 @@ passport.deserializeUser((id, done) => {
 		done(null, user);
 	});
 });
+
+passport.use(
+	new LocalStrategy(
+		{
+			usernameField: 'email'
+		},
+		function(email, password, done) {
+			User.findOne({ userEmail: email })
+				.then(function(user) {
+					//Match User
+					if (!user) {
+						return done(null, false, {
+							message: 'Email is not registered'
+						});
+					}
+					if (!user.validPassword(password)) {
+						return done(null, false, {
+							message: 'password is invalid'
+						});
+					}
+					// //Match password
+					// bcrypt.compare(password, user.password, (err, isMatch) => {
+					// 	if(err) throw err;
+
+					// 	if (isMatch) {
+					// 		return done(null, user);
+					// 	} else {
+					// 		return done(null, false, { message: 'password is incorrect' });
+					// 	}
+					// });
+
+					return done(null, user);
+				})
+				.catch(done);
+		}
+	)
+);
 
 passport.use(
 	'facebookSignup',
@@ -63,6 +102,7 @@ passport.use(
 		function(accessToken, refreshToken, profile, done) {
 			// check if user already exists in our db
 			console.log(profile);
+			console.log(accessToken);
 			User.findOne({ facebookId: profile.id }).then((currentUser) => {
 				if (currentUser) {
 					// already have the user
@@ -73,7 +113,8 @@ passport.use(
 					new User({
 						username: profile.displayName,
 						facebookId: profile.id,
-						userEmail: profile.emails[0].value
+						userEmail: profile.emails[0].value,
+						accessToken: accessToken
 					})
 						.save()
 						.then((newUser) => {
@@ -141,7 +182,8 @@ passport.use(
 					new User({
 						username: profile.displayName,
 						googleId: profile.id,
-						userEmail: profile.emails[0].value
+						userEmail: profile.emails[0].value,
+						accessToken: accessToken
 					})
 						.save()
 						.then((newUser) => {

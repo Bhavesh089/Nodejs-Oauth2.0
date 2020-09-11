@@ -4,9 +4,9 @@ const router = express.Router();
 const lazadaUser = require('../models/lazadaUser-model');
 const authController = require('../Controllers/auth-controller');
 //Login page route
-router.get('/login', (req, res) => {
-	res.render('login', { user: req.user });
-});
+// router.get('/login', (req, res) => {
+// 	res.render('login', { user: req.user });
+// });
 
 // auth logout
 router.get('/logout', (req, res) => {
@@ -40,7 +40,7 @@ router.get(
 // callback route for googlelogin to redirect to
 router.get('/login/google/redirect', passport.authenticate('googleLogin'), (req, res) => {
 	//res.send(req.user);
-	res.redirect('/profile/');
+	res.redirect('/connect/');
 });
 
 // auth with facebook signup
@@ -70,7 +70,7 @@ router.get(
 router.get('/login/facebook/redirect', passport.authenticate('facebookLogin'), (req, res) => {
 	//res.send(req.user);
 	console.log(res);
-	res.redirect('/profile/');
+	res.redirect('/connect/');
 });
 
 // auth with lazada

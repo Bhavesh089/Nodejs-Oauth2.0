@@ -17,5 +17,8 @@ module.exports = {
 	},
 	session: {
 		cookieKey: 'theskyhasfallen'
+	},
+	Jwt: {
+		secret: 'theskyhasntfallen'
 	}
 };

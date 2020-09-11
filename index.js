@@ -7,18 +7,19 @@ const authRoutes = require('./routes/auth-routes');
 const connectRoutes = require('./routes/connect-routes');
 const signupRoutes = require('./routes/signup-routes');
 const profileRoutes = require('./routes/profile');
+const loginRoutes = require('./routes/login-routes');
 const passport = require('passport');
-const passportSetup = require('./config/passport-setup');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
-const request = require('request');
 const cronjobController = require('./Controllers/cronjob-controller');
 const registerRoutes = require('./routes/Register');
 const analyticsRoutes = require('./routes/analytics-routes');
+
 // set up view engine
 app.set('view engine', 'ejs');
 
+app.use(express.urlencoded({ extended: true }));
 // set cookie session
 app.use(
 	cookieSession({
@@ -30,7 +31,7 @@ app.use(
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
-
+require('./config/passport-setup');
 // connect to mongodb
 mongoose.connect(
 	keys.mongodb.dbURI,
@@ -75,16 +76,16 @@ cron.schedule('* * * * *', async function() {
 app.use('/auth', authRoutes);
 app.use('/connect', connectRoutes);
 app.use('/profile', profileRoutes);
-app.use('/signup', signupRoutes);
+// app.use('/signup', signupRoutes);
 app.use('/register', registerRoutes);
-app.use('/ticket', express.static('views'));
-app.use('/orangeimg', express.static('views'));
+// app.use('/orangeimg', express.static('views'));
 app.use('/assets', express.static('assets'));
+app.use('/login', loginRoutes);
 app.use('/loginassets', express.static('loginassets'));
 app.use('/analytics', analyticsRoutes);
 // create home route
 app.get('/', (req, res) => {
-	res.render('profile', { user: req.user });
+	res.render('Register', { user: req.user });
 });
 
 //Port listening
