@@ -23,7 +23,7 @@ exports.authtokenCheck = (req, res, next) => {
 				req.user = user;
 				next();
 			});
-		} else if (SocialUsercheck) {
+		} else if (req.user.accessToken) {
 			next();
 		} else {
 			return res.sendStatus(401);
