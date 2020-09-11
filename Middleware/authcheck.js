@@ -2,7 +2,11 @@ const jwt = require('jsonwebtoken');
 var secret = require('../config/keys');
 
 exports.authtokenCheck = (req, res, next) => {
-	if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+	// const socialUser = req.user;
+	if (
+		(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') ||
+		(req.user && req.user.accessToken)
+	) {
 		const token = req.headers.authorization.split(' ')[1];
 		jwt.verify(token, secret.Jwt.secret, (err, user) => {
 			if (err) return res.sendStatus(403);
