@@ -4,26 +4,54 @@ const jwt = require('jsonwebtoken');
 var crypto = require('crypto');
 var secret = require('../config/keys');
 /* User schema */
+// const userSchema = new Schema(
+// 	{
+// 		username: String,
+// 		googleId: String,
+// 		facebookId: String,
+// 		userEmail: String,
+// 		accessToken: String,
+// 		salt: String,
+// 		active: Boolean
+// 	},
+// 	{ timestamps: true }
+// );
 const userSchema = new Schema(
 	{
-		username: String,
-		googleId: String,
-		facebookId: String,
-		userEmail: String,
-		accessToken: String,
-		password: String,
-		salt: String
+		method: {
+			type: String,
+			enum: [ 'local', 'google', 'facebook' ]
+		},
+		local: {
+			username: String,
+			userEmail: String,
+			accessToken: String,
+			secretToken: String,
+			salt: String,
+			active: Boolean
+		},
+		google: {
+			googleId: String,
+			userEmail: String,
+			username: String,
+			accessToken: String
+		},
+		facebook: {
+			facebookId: String,
+			username: String,
+			userEmail: String,
+			accessToken: String
+		}
 	},
 	{ timestamps: true }
 );
-
 /*
 JSON representation of the user including a token
 */
 userSchema.methods.toAuthJSON = function() {
 	return {
-		username: this.username,
-		email: this.email,
+		username: this.local.username,
+		email: this.local.email,
 		token: this.generateJWT()
 	};
 };
@@ -40,8 +68,8 @@ pbkdf2Sync() takes five parameters:
     )
 */
 userSchema.methods.setPassword = function(password) {
-	this.salt = crypto.randomBytes(16).toString('hex');
-	this.password = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+	this.local.salt = crypto.randomBytes(16).toString('hex');
+	this.local.accessToken = crypto.pbkdf2Sync(password, this.local.salt, 10000, 512, 'sha512').toString('hex');
 };
 
 /*
@@ -59,7 +87,7 @@ userSchema.methods.generateJWT = function() {
 	return jwt.sign(
 		{
 			id: this._id,
-			username: this.username,
+			username: this.local.username,
 			exp: parseInt(exp.getTime() / 1000)
 		},
 		secret.Jwt.secret
@@ -70,8 +98,8 @@ userSchema.methods.generateJWT = function() {
   Check if password is valid
   */
 userSchema.methods.validPassword = function(password) {
-	var passwordHash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-	return this.accessToken === passwordHash;
+	var passwordHash = crypto.pbkdf2Sync(password, this.local.salt, 10000, 512, 'sha512').toString('hex');
+	return this.local.accessToken === passwordHash;
 };
 
 const User = mongoose.model('user', userSchema);

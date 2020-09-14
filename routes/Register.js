@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 			password2
 		});
 	} else {
-		User.findOne({ userEmail: email }).then((user) => {
+		User.findOne({ 'local.userEmail': email }).then((user) => {
 			if (user) {
 				errors.push({ msg: 'Email is already exists' });
 				res.render('Register', {
@@ -39,19 +39,31 @@ router.post('/', (req, res) => {
 					password2
 				});
 			} else {
+				// const newUser = new User();
+				// newUser.metj = name;
+				// newUser.userEmail = email;
+				// newUser.setPassword(password);
+				// newUser.secretToken = newUser.generateJWT();
+				// newUser.active = false;
 				const newUser = new User();
-				newUser.username = name;
-				newUser.userEmail = email;
+
+				(newUser.method = 'local'),
+					(newUser.local.username = name),
+					(newUser.local.userEmail = email),
+					(newUser.local.secretToken = newUser.generateJWT()),
+					(newUser.local.active = false);
 				newUser.setPassword(password);
+				// newUser.local.setPassword(password);
 				// const newUser = new User({
 				// 	username: name,
 				// 	userEmail: email,
 				// 	password: User.set
 				// });
-
+				console.log(req.user);
 				newUser
 					.save()
 					.then((user) => {
+						console.log(user);
 						return res
 							.header('Authorization', 'Bearer ' + user.generateJWT())
 							.render('connect', { user: user });

@@ -33,6 +33,7 @@ const lazadaUsercheck = (req, res, next) => {
 router.get('/', authchecks.authtokenCheck, (req, res, next) => {
 	//Rendering profile page and passing required arguments.
 	console.log(res.locals.lazadauser);
+	console.log(req.user);
 	res.render('connect', { user: req.user, lazadauser: res.locals.lazadauser });
 });
 

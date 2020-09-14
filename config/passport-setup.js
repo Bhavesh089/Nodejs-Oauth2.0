@@ -23,7 +23,7 @@ passport.use(
 			usernameField: 'email'
 		},
 		function(email, password, done) {
-			User.findOne({ userEmail: email })
+			User.findOne({ 'local.userEmail': email })
 				.then(function(user) {
 					//Match User
 					if (!user) {
@@ -36,6 +36,11 @@ passport.use(
 							message: 'password is invalid'
 						});
 					}
+					// if (!user.active) {
+					// 	return done(null, false, {
+					// 		message: 'You need to verify email first'
+					// 	});
+					// }
 					// //Match password
 					// bcrypt.compare(password, user.password, (err, isMatch) => {
 					// 	if(err) throw err;
@@ -104,7 +109,7 @@ passport.use(
 			console.log(profile);
 			console.log(accessToken);
 			console.log(refreshToken);
-			User.findOne({ facebookId: profile.id }).then((currentUser) => {
+			User.findOne({ 'facebook.facebookId': profile.id }).then((currentUser) => {
 				if (currentUser) {
 					// already have the user
 					console.log('user is: ' + currentUser);
@@ -112,10 +117,13 @@ passport.use(
 				} else {
 					// if not, create user in our db
 					new User({
-						username: profile.displayName,
-						facebookId: profile.id,
-						userEmail: profile.emails[0].value,
-						accessToken: accessToken
+						method: 'facebook',
+						facebook: {
+							username: profile.displayName,
+							facebookId: profile.id,
+							userEmail: profile.emails[0].value,
+							accessToken: accessToken
+						}
 					})
 						.save()
 						.then((newUser) => {
@@ -176,7 +184,7 @@ passport.use(
 			console.log(accessToken);
 			console.log(refreshToken);
 			// check if user already exists in our db
-			User.findOne({ googleId: profile.id }).then((currentUser) => {
+			User.findOne({ 'google.googleId': profile.id }).then((currentUser) => {
 				if (currentUser) {
 					// already have the user
 					console.log('user is: ' + currentUser);
@@ -184,10 +192,13 @@ passport.use(
 				} else {
 					// if not, create user in our db
 					new User({
-						username: profile.displayName,
-						googleId: profile.id,
-						userEmail: profile.emails[0].value,
-						accessToken: accessToken
+						method: google,
+						google: {
+							username: profile.displayName,
+							googleId: profile.id,
+							userEmail: profile.emails[0].value,
+							accessToken: accessToken
+						}
 					})
 						.save()
 						.then((newUser) => {

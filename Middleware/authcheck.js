@@ -11,7 +11,7 @@ exports.authtokenCheck = (req, res, next) => {
 				req.user = user;
 				next();
 			});
-		} else if (req.user.accessToken) {
+		} else if (req.user.facebook.accessToken || req.google.accessToken) {
 			next();
 		} else {
 			return res.sendStatus(401);

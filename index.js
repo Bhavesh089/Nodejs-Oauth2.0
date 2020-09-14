@@ -8,6 +8,7 @@ const connectRoutes = require('./routes/connect-routes');
 const signupRoutes = require('./routes/signup-routes');
 const profileRoutes = require('./routes/profile');
 const loginRoutes = require('./routes/login-routes');
+const verifytokenRoutes = require('./routes/verifytoken');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
@@ -81,6 +82,7 @@ app.use('/register', registerRoutes);
 // app.use('/orangeimg', express.static('views'));
 app.use('/assets', express.static('assets'));
 app.use('/login', loginRoutes);
+app.use('/verifytoken', verifytokenRoutes);
 app.use('/loginassets', express.static('loginassets'));
 app.use('/analytics', analyticsRoutes);
 // create home route
