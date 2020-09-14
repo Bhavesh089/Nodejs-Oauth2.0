@@ -192,7 +192,7 @@ passport.use(
 				} else {
 					// if not, create user in our db
 					new User({
-						method: google,
+						method: 'google',
 						google: {
 							username: profile.displayName,
 							googleId: profile.id,
