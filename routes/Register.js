@@ -8,6 +8,7 @@ router.post('/', (req, res) => {
 	console.log(req.body);
 	const { name, email, password, password2 } = req.body;
 	let errors = [];
+
 	//check required fields
 	if (!name || !email || !password || !password2) {
 		errors.push({ msg: 'please fill in all fields' });
@@ -39,6 +40,7 @@ router.post('/', (req, res) => {
 					password,
 					password2
 				});
+				console.log('errors');
 			} else {
 				// const newUser = new User();
 				// newUser.metj = name;
@@ -46,15 +48,16 @@ router.post('/', (req, res) => {
 				// newUser.setPassword(password);
 				// newUser.secretToken = newUser.generateJWT();
 				// newUser.active = false;
-				const secret = randString.generate();
+
 				const newUser = new User();
 
 				(newUser.method = 'local'),
 					(newUser.local.username = name),
 					(newUser.local.userEmail = email),
-					(newUser.local.secretToken = secret),
 					(newUser.local.active = false);
 				newUser.setPassword(password);
+				const secret = newUser.generateJWT();
+				const url = 'http://' + req.headers.host + '/verify/' + secret;
 				// newUser.local.setPassword(password);
 				// const newUser = new User({
 				// 	username: name,
@@ -71,18 +74,11 @@ router.post('/', (req, res) => {
 							from: 'care@fiolabs.ai', // Sender address
 							to: email, // List of recipients
 							subject: 'please verify your email ', // Subject line
-							html: `please verify your email by following token
-							<br/>
-							Hi there,
-							<br/>
-							Thank you for registration!!!!!!!
-							<br/>
-							<b> token : ${user.local.secretToken} </b>
-							on the Following page :
-							<a> href = "http://localhost:3000/verifytoken"> Click here </a> ` // Plain text body
+							html: `please click this link to confirm your email: <a href="${url}">${url}</a>` // Plain text body
 						};
 						mailer.sendmessage(message);
-						return res.redirect('/verifytoken');
+						req.flash('success_msg', 'Please check you email for confirmation');
+						return res.redirect('/');
 						// return res
 						// 	.header('Authorization', 'Bearer ' + user.generateJWT())
 						// 	.render('connect', { user: user });

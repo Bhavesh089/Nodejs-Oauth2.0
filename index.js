@@ -44,6 +44,9 @@ app.use(flash());
 app.use(function(req, res, next) {
 	res.locals.error = req.flash('error');
 	res.locals.error_msg = req.flash('error_msg');
+	res.locals.success_msg = req.flash('success_msg');
+	res.locals.success_loginmsg = req.flash('success_loginmsg');
+	res.locals.failure_regmsg = req.flash('failure_regmsg');
 	next();
 });
 // connect to mongodb
@@ -95,7 +98,7 @@ app.use('/register', registerRoutes);
 // app.use('/orangeimg', express.static('views'));
 app.use('/assets', express.static('assets'));
 app.use('/login', loginRoutes);
-app.use('/verifytoken', verifytokenRoutes);
+app.use('/verify', verifytokenRoutes);
 app.use('/loginassets', express.static('loginassets'));
 app.use('/analytics', analyticsRoutes);
 app.use('/forgotpassword', forgotRoutes);

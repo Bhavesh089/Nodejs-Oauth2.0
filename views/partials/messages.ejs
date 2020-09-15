@@ -10,6 +10,27 @@
 <%});%>
 <%}%>
 
+<% if(success_msg != '') {%>
+  <div class="alert alert-success" role="alert">
+    <%= success_msg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+<%}%>
+
+<% if(failure_regmsg != '') {%>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <%= failure_regmsg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+<%}%>
+
+
 <!-- <% if(typeof login_errors != 'undefined'){ %>
     <% login_errors.forEach(function(error){ %>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">

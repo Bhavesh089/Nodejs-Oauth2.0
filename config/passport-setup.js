@@ -36,11 +36,11 @@ passport.use(
 							message: 'password is invalid'
 						});
 					}
-					// if (!user.active) {
-					// 	return done(null, false, {
-					// 		message: 'You need to verify email first'
-					// 	});
-					// }
+					if (user.active === false) {
+						return done(null, false, {
+							message: 'You need to verify email first'
+						});
+					}
 					// //Match password
 					// bcrypt.compare(password, user.password, (err, isMatch) => {
 					// 	if(err) throw err;
