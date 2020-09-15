@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const lazadaUser = require('../models/lazadaUser-model');
-const authchecks = require('../Middleware/authcheck');
+// const authchecks = require('../Middleware/authcheck');
 // const authCheck = (req, res, next) => {
 // 	if (!req.user) {
 // 		// if user not logged in
@@ -29,7 +29,7 @@ const lazadaUsercheck = (req, res, next) => {
 	});
 };
 
-router.get('/', authchecks.authtokenCheck, (req, res, next) => {
+router.get('/', (req, res, next) => {
 	//Rendering profile page and passing required arguments.
 	console.log(res.locals.lazadauser);
 	res.render('profile', { user: req.user, lazadauser: res.locals.lazadauser });

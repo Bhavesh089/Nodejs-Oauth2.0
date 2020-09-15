@@ -16,9 +16,13 @@ module.exports = {
 		dbURI: 'mongodb+srv://movies:c5JjjpKc2TraWkEO@moviesdb.3zwnc.mongodb.net/shop?retryWrites=true&w=majority'
 	},
 	session: {
-		cookieKey: 'theskyhasfallen'
+		cookieKey: 'theskyhashifallen'
 	},
 	Jwt: {
 		secret: 'theskyhasntfallen'
+	},
+	mailtrap: {
+		user: 'cfa70e124009e8',
+		pass: 'e480180cb5e274'
 	}
 };

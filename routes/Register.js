@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user-model');
-
+const mailer = require('../misc/mailer');
+const randString = require('randomstring');
 //Register Handle
 router.post('/', (req, res) => {
 	console.log(req.body);
@@ -45,12 +46,13 @@ router.post('/', (req, res) => {
 				// newUser.setPassword(password);
 				// newUser.secretToken = newUser.generateJWT();
 				// newUser.active = false;
+				const secret = randString.generate();
 				const newUser = new User();
 
 				(newUser.method = 'local'),
 					(newUser.local.username = name),
 					(newUser.local.userEmail = email),
-					(newUser.local.secretToken = newUser.generateJWT()),
+					(newUser.local.secretToken = secret),
 					(newUser.local.active = false);
 				newUser.setPassword(password);
 				// newUser.local.setPassword(password);
@@ -64,9 +66,26 @@ router.post('/', (req, res) => {
 					.save()
 					.then((user) => {
 						console.log(user);
-						return res
-							.header('Authorization', 'Bearer ' + user.generateJWT())
-							.render('connect', { user: user });
+
+						const message = {
+							from: 'care@fiolabs.ai', // Sender address
+							to: email, // List of recipients
+							subject: 'please verify your email ', // Subject line
+							html: `please verify your email by following token
+							<br/>
+							Hi there,
+							<br/>
+							Thank you for registration!!!!!!!
+							<br/>
+							<b> token : ${user.local.secretToken} </b>
+							on the Following page :
+							<a> href = "http://localhost:3000/verifytoken"> Click here </a> ` // Plain text body
+						};
+						mailer.sendmessage(message);
+						return res.redirect('/verifytoken');
+						// return res
+						// 	.header('Authorization', 'Bearer ' + user.generateJWT())
+						// 	.render('connect', { user: user });
 					})
 					.catch((err) => console.log(err));
 

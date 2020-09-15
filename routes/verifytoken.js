@@ -9,15 +9,15 @@ router.post('/', async (req, res, next) => {
 	try {
 		const token = req.body.token;
 		console.log(token);
-		const user = await User.findOne({ accessToken: token });
+		const user = await User.findOne({ 'local.secretToken': token });
 		if (!user) {
 			return res.render('verifytoken', { message: 'token is expired or already used ' });
 		}
 		if (user) {
-			user.active = true;
-			user.accessToken = '';
+			user.local.active = true;
+			user.local.secretToken = '';
 			await user.save();
-			return res.header('Authorization', 'Bearer ' + user.generateJWT()).render('connect', { user: user });
+			return res.redirect('/register');
 		}
 	} catch (error) {
 		next(error);

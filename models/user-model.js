@@ -27,6 +27,7 @@ const userSchema = new Schema(
 			userEmail: String,
 			accessToken: String,
 			secretToken: String,
+			resetpwToken: String,
 			salt: String,
 			active: Boolean
 		},

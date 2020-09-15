@@ -29,7 +29,7 @@ const lazadaUsercheck = (req, res, next) => {
 	});
 };
 
-router.get('/', authCheck.authtokenCheck, (req, res, next) => {
+router.get('/', (req, res, next) => {
 	//Rendering profile page and passing required arguments.
 	console.log(res.locals.lazadauser);
 	res.render('viewAnalytics', { user: req.user, lazadauser: res.locals.lazadauser });

@@ -16,6 +16,8 @@ const cookieSession = require('cookie-session');
 const cronjobController = require('./Controllers/cronjob-controller');
 const registerRoutes = require('./routes/Register');
 const analyticsRoutes = require('./routes/analytics-routes');
+const forgotRoutes = require('./routes/forgotps');
+const forgotsendmailRoutes = require('./routes/forgotsendemail');
 
 // set up view engine
 app.set('view engine', 'ejs');
@@ -85,6 +87,9 @@ app.use('/login', loginRoutes);
 app.use('/verifytoken', verifytokenRoutes);
 app.use('/loginassets', express.static('loginassets'));
 app.use('/analytics', analyticsRoutes);
+app.use('/forgotpassword', forgotRoutes);
+app.use('/sendemail', forgotsendmailRoutes);
+
 // create home route
 app.get('/', (req, res) => {
 	res.render('Register', { user: req.user });

@@ -12,15 +12,17 @@ router.post('/', function(req, res, next) {
 	if (!password) {
 		return res.render('Register', { error_msg: "Password can't be blank" });
 	}
-	passport.authenticate('local', { failureRedirect: '/Register', session: false }, function(err, user, info) {
+	passport.authenticate('local', { failureRedirect: '/Register' }, function(err, user, info) {
 		if (err) {
 			console.log(err);
 			// return next(err);
 		}
 		if (user) {
-			user.token = user.generateJWT();
+			// user.token = user.generateJWT();
 			// res.json({ user: user.toAuthJSON() });
-			return res.header('Authorization', 'Bearer ' + user.generateJWT()).render('connect', { user: user });
+			console.log('hello');
+
+			return res.header('Authorization', 'Bearer ' + user.generateJWT).redirect('/connect');
 		} else {
 			console.log(info.message);
 			return res.render('Register', { error_msg: info.message });

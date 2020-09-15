@@ -23,38 +23,36 @@ passport.use(
 			usernameField: 'email'
 		},
 		function(email, password, done) {
-			User.findOne({ 'local.userEmail': email })
-				.then(function(user) {
-					//Match User
-					if (!user) {
-						return done(null, false, {
-							message: 'Email is not registered'
-						});
-					}
-					if (!user.validPassword(password)) {
-						return done(null, false, {
-							message: 'password is invalid'
-						});
-					}
-					// if (!user.active) {
-					// 	return done(null, false, {
-					// 		message: 'You need to verify email first'
-					// 	});
-					// }
-					// //Match password
-					// bcrypt.compare(password, user.password, (err, isMatch) => {
-					// 	if(err) throw err;
+			User.findOne({ 'local.userEmail': email }).then(function(user) {
+				//Match User
+				if (!user) {
+					return done(null, false, {
+						message: 'Email is not registered'
+					});
+				}
+				if (!user.validPassword(password)) {
+					return done(null, false, {
+						message: 'password is invalid'
+					});
+				}
+				if (user.local.active === false) {
+					return done(null, false, {
+						message: 'You need to verify email first'
+					});
+				}
+				// //Match password
+				// bcrypt.compare(password, user.password, (err, isMatch) => {
+				// 	if(err) throw err;
 
-					// 	if (isMatch) {
-					// 		return done(null, user);
-					// 	} else {
-					// 		return done(null, false, { message: 'password is incorrect' });
-					// 	}
-					// });
+				// 	if (isMatch) {
+				// 		return done(null, user);
+				// 	} else {
+				// 		return done(null, false, { message: 'password is incorrect' });
+				// 	}
+				// });
 
-					return done(null, user);
-				})
-				.catch(done);
+				return done(null, user);
+			});
 		}
 	)
 );
