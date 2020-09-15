@@ -9,6 +9,7 @@ const signupRoutes = require('./routes/signup-routes');
 const profileRoutes = require('./routes/profile');
 const loginRoutes = require('./routes/login-routes');
 const verifytokenRoutes = require('./routes/verifytoken');
+const flash = require('connect-flash');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');

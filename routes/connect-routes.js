@@ -3,15 +3,15 @@ const router = express.Router();
 const lazadaUser = require('../models/lazadaUser-model');
 // const authchecks = require('../Middleware/authcheck');
 
-// const authCheck = (req, res, next) => {
-// 	if (!req.user) {
-// 		// if user not logged in
-// 		res.redirect('/');
-// 	} else {
-// 		// if logged in
-// 		next();
-// 	}
-// };
+const authCheck = (req, res, next) => {
+	if (!req.user) {
+		// if user not logged in
+		res.redirect('/');
+	} else {
+		// if logged in
+		next();
+	}
+};
 
 const lazadaUsercheck = (req, res, next) => {
 	//checking logged user in lazadaUser model
@@ -30,7 +30,7 @@ const lazadaUsercheck = (req, res, next) => {
 	});
 };
 
-router.get('/', (req, res, next) => {
+router.get('/', authCheck, (req, res, next) => {
 	//Rendering profile page and passing required arguments.
 	console.log(res.locals.lazadauser);
 	console.log(req.user);

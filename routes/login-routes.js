@@ -21,13 +21,21 @@ router.post('/', function(req, res, next) {
 			// user.token = user.generateJWT();
 			// res.json({ user: user.toAuthJSON() });
 			console.log('hello');
-
-			return res.header('Authorization', 'Bearer ' + user.generateJWT).redirect('/connect');
+			console.log(req.user);
+			res.header('Authorization', 'Bearer ' + user.generateJWT());
+			return res.redirect('/connect');
 		} else {
 			console.log(info.message);
 			return res.render('Register', { error_msg: info.message });
 		}
 	})(req, res, next);
 });
+// router.post('/', (req, res, next) => {
+// 	passport.authenticate('local', {
+// 		successRedirect: '/connect',
+// 		failureRedirect: '/',
+// 		failureFlash: true
+// 	})(req, res, next);
+// });
 
 module.exports = router;
