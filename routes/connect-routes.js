@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const lazadaUser = require('../models/lazadaUser-model');
-// const authchecks = require('../Middleware/authcheck');
-
-const authCheck = (req, res, next) => {
-	if (!req.user) {
-		// if user not logged in
-		res.redirect('/');
-	} else {
-		// if logged in
-		next();
-	}
-};
+const { ensureAuthenticated } = require('../Middleware/authcheck');
+// const authCheck = (req, res, next) => {
+// 	if (!req.user) {
+// 		// if user not logged in
+// 		res.redirect('/');
+// 	} else {
+// 		// if logged in
+// 		next();
+// 	}
+// };
 
 const lazadaUsercheck = (req, res, next) => {
 	//checking logged user in lazadaUser model
@@ -30,10 +29,9 @@ const lazadaUsercheck = (req, res, next) => {
 	});
 };
 
-router.get('/', authCheck, (req, res, next) => {
+router.get('/', ensureAuthenticated, (req, res, next) => {
 	//Rendering profile page and passing required arguments.
 	console.log(res.locals.lazadauser);
-	console.log(req.user);
 	res.render('connect', { user: req.user, lazadauser: res.locals.lazadauser });
 });
 

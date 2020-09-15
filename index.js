@@ -36,6 +36,16 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport-setup');
+
+// Connect flash
+app.use(flash());
+
+// Global variables
+app.use(function(req, res, next) {
+	res.locals.error = req.flash('error');
+	res.locals.error_msg = req.flash('error_msg');
+	next();
+});
 // connect to mongodb
 mongoose.connect(
 	keys.mongodb.dbURI,
