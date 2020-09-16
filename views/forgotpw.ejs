@@ -24,16 +24,17 @@
           <div class="card card-login">
             <form class="form" method="POST" action="/forgotpassword">
               <div class="card-header card-header-primary text-center">
-                <h4 class="card-title">send email</h4>
+                <h4 class="card-title">Send Email</h4>
               </div>  
               <div class="card-body">
+                <%- include('partials/messagesLogin'); %>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="material-icons">email</i>
                     </span>
                   </div>
-                  <input type="email" name = "email" id = "email" class="form-control" placeholder="Insert token..."  value="<%= typeof token != 'undefined' ? email : '' %>"/>
+                  <input type="email" name = "email" id = "email" class="form-control" placeholder="Email"  value="<%= typeof email != 'undefined' ? email : '' %>"/>
                 </div>
               </div>
               <div class="text-center" >

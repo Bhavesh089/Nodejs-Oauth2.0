@@ -14,19 +14,24 @@ router.post('/', async (req, res, next) => {
 		console.log(email);
 		const user = await User.findOne({ 'local.userEmail': email });
 		if (!user) {
-			return res.render('/', { message: 'Invalid email' });
+			req.flash('error_msg', 'Email not found, kindly registry or retype!');
+			return res.redirect('/forgotpassword');
 		}
+
 		if (user) {
-			token = randString.generate();
+			token = user.generateJWT();
 			user.local.resetpwToken = token;
 			await user.save();
+			const url = 'http://' + req.headers.host + '/forgotpassword/reset/' + token;
 			const message = {
 				from: 'care@fiolabs.ai', // Sender address
 				to: email, // List of recipients
 				subject: 'Reset password', // Subject line
-				text: 'http://' + req.headers.host + '/forgotpassword/reset/' + token
+				html: `please click this link to reset password: <a href="${url}">${url}</a>`
 			};
-			return mailer.sendmessage(message);
+			mailer.sendmessage(message);
+			req.flash('success_loginmsg', 'Reset password link has been sent to your email!');
+			return res.redirect('/forgotpassword');
 		}
 	} catch (error) {
 		next(error);
@@ -35,6 +40,7 @@ router.post('/', async (req, res, next) => {
 router.get('/reset/:token', (req, res, next) => {
 	User.findOne({ 'local.resetpwToken': req.params.token }, (err, user) => {
 		if (!user) {
+			req.flash('error_msg', 'token is expired or user donot found!');
 			return res.redirect('/');
 		}
 		res.render('reset', { token: req.params.token });
@@ -46,15 +52,18 @@ router.post('/reset/:token', async (req, res, next) => {
 		.then((user) => {
 			if (!user) {
 				console.log('token expired');
+				req.flash('error_msg', 'token is expired or user donot found!');
 				return res.redirect('back');
 			}
 			if (req.body.password === req.body.confirm) {
 				user.setPassword(req.body.password);
 				user.local.resetpwToken = '';
 				user.save();
-				return res.redirect('/connect');
+				req.flash('success_loginmsg', 'Successfully updated password now you may login!');
+				return res.redirect('/register');
 			} else {
 				console.log('password do not match');
+				req.flash('error_msg', 'password do not match');
 				return res.redirect('back');
 			}
 		})

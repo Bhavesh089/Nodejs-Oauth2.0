@@ -27,13 +27,14 @@
                 <h4 class="card-title"> Reset password</h4>
               </div>  
               <div class="card-body">
+                <%- include('partials/messagesLogin'); %>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="material-icons">lock</i>
                     </span>
                   </div>
-                  <input type="text" name = "password" id = "password" class="form-control" placeholder="Enter new password"  value="<%= typeof token != 'undefined' ? token : '' %>"/>
+                  <input type="password" name = "password" id = "password" class="form-control" placeholder="Enter new password"  value="<%= typeof token != 'undefined' ? token : '' %>"/>
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -41,7 +42,7 @@
                       <i class="material-icons">lock</i>
                     </span>
                   </div>
-                  <input type="email" name = "confirm" id = "confirm" class="form-control" placeholder="Confirm password" value="<%= typeof email != 'undefined' ? email : '' %>"/>
+                  <input type="password" name = "confirm" id = "confirm" class="form-control" placeholder="Confirm password" value="<%= typeof email != 'undefined' ? email : '' %>"/>
                 </div>
               </div>
               <div class="text-center" >

@@ -47,6 +47,7 @@ app.use(function(req, res, next) {
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.success_loginmsg = req.flash('success_loginmsg');
 	res.locals.failure_regmsg = req.flash('failure_regmsg');
+
 	next();
 });
 // connect to mongodb
