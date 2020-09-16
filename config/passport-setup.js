@@ -30,13 +30,11 @@ passport.use(
 						return done(null, false, {
 							message: 'Email is not registered'
 						});
-					}
-					if (!user.validPassword(password)) {
+					} else if (!user.validPassword(password)) {
 						return done(null, false, {
 							message: 'password is invalid'
 						});
-					}
-					if (user.active === false) {
+					} else if (user.local.active === false) {
 						return done(null, false, {
 							message: 'You need to verify email first'
 						});

@@ -37,15 +37,24 @@ router.post('/', async (req, res, next) => {
 		next(error);
 	}
 });
+
 router.get('/reset/:token', (req, res, next) => {
-	User.findOne({ 'local.resetpwToken': req.params.token }, (err, user) => {
-		if (!user) {
-			req.flash('error_msg', 'token is expired or user donot found!');
-			return res.redirect('/');
-		}
-		res.render('reset', { token: req.params.token });
-	});
+	User.findOne({ 'local.resetpwToken': req.params.token })
+		.then((user) => {
+			if (!user) {
+				req.flash('error_msg', 'token is expired or user donot found!');
+				return res.redirect('/');
+			}
+			if (user) {
+				return res.render('reset', { token: req.params.token });
+			}
+		})
+		.catch((err) => console.log(err));
 });
+
+// router.get('/reset', (req, res, next) => {
+// 	res.render('reset', { token: req.params.token });
+// });
 
 router.post('/reset/:token', async (req, res, next) => {
 	User.findOne({ 'local.resetpwToken': req.params.token })
