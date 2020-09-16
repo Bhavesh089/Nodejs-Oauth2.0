@@ -10,7 +10,7 @@ router.get('/:token', async (req, res, next) => {
 		console.log(token);
 		// const user = await User.findOne({ 'local.secretToken': token });
 		jwt.verify(token, secret.Jwt.secret, (err, user) => {
-			if (err) return req.flash({ failure_regmsg: 'something went wrong or try signup again' });
+			if (err) return req.flash({ failure_regmsg: 'Something went wrong or try signup again' });
 
 			User.findById(user.id).then((currUser) => {
 				if (currUser) {
@@ -20,7 +20,7 @@ router.get('/:token', async (req, res, next) => {
 					return res.redirect('/register');
 				}
 				if (!currUser) {
-					req.flash({ failure_regmsg: 'something went wrong or try signup again' });
+					req.flash({ failure_regmsg: 'Something went wrong or try signup again' });
 					return res.redirect('/register');
 				}
 			});

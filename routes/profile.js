@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const lazadaUser = require('../models/lazadaUser-model');
-const { ensureAuthenticated } = require('../Middleware/authcheck');
+const { ensureAuthenticated, token } = require('../Middleware/authcheck');
 // const authchecks = require('../Middleware/authcheck');
 // const authCheck = (req, res, next) => {
 // 	if (!req.user) {
