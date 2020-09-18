@@ -59,22 +59,49 @@ router.get('/reset/:token', (req, res, next) => {
 router.post('/reset/:token', async (req, res, next) => {
 	User.findOne({ 'local.resetpwToken': req.params.token })
 		.then((user) => {
+			const { password, confirm } = req.body;
+			let errors = [];
+
 			if (!user) {
 				console.log('token expired');
 				req.flash('error_msg', 'token is expired or user donot found!');
 				return res.redirect('back');
 			}
-			if (req.body.password === req.body.confirm) {
-				user.setPassword(req.body.password);
+			if (!password || !confirm) {
+				errors.push({ msg: 'please fill in all fields' });
+			}
+			//check password2
+			if (password !== confirm) {
+				errors.push({ msg: 'Password do not match' });
+			}
+			// Check pass length
+			if (password.length < 8) {
+				errors.push({ msg: 'password should be at least 8 characters long' });
+			}
+			if (errors.length > 0) {
+				res.render('reset', {
+					errors,
+					password,
+					confirm
+				});
+			} else {
+				user.setPassword(password);
 				user.local.resetpwToken = '';
 				user.save();
 				req.flash('success_loginmsg', 'Successfully updated password now you may login!');
 				return res.redirect('/register');
-			} else {
-				console.log('password do not match');
-				req.flash('error_msg', 'password do not match');
-				return res.redirect('back');
 			}
+			// if (req.body.password === req.body.confirm) {
+			// 	user.setPassword(req.body.password);
+			// 	user.local.resetpwToken = '';
+			// 	user.save();
+			// 	req.flash('success_loginmsg', 'Successfully updated password now you may login!');
+			// 	return res.redirect('/register');
+			// } else {
+			// 	console.log('password do not match');
+			// 	req.flash('error_msg', 'password do not match');
+			// 	return res.redirect('back');
+			// }
 		})
 		.catch((err) => console.log(err));
 });
