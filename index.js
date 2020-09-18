@@ -18,8 +18,6 @@ const cronjobController = require('./Controllers/cronjob-controller');
 const registerRoutes = require('./routes/Register');
 const analyticsRoutes = require('./routes/analytics-routes');
 const forgotRoutes = require('./routes/forgotps');
-const cookieParser = require('cookie-parser');
-
 const forgotsendmailRoutes = require('./routes/forgotsendemail');
 
 // set up view engine
@@ -34,7 +32,12 @@ app.use(
 	})
 );
 
-app.use(cookieParser());
+app.use(function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+
+	res.header('Access-Control-Expose-Headers', 'Authorization');
+	next();
+});
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());

@@ -6,7 +6,9 @@ module.exports = {
 			const curruser = await User.findById(req.user.id);
 			if (curruser) {
 				token = curruser.generateJWT();
-				res.set('Authorization', 'Bearer ' + token);
+				// res.setHeader('Content-Type', 'application/json; charset=utf-8');
+				res.set('authorization', 'Bearer ' + token);
+
 				return next();
 			}
 		}
@@ -20,14 +22,23 @@ module.exports = {
 		res.redirect('/connect');
 	},
 	token: function(req, res, next) {
-		if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-			const token = req.headers.authorization.split(' ')[1];
-			jwt.verify(token, secret.Jwt.secret, (err, user) => {
-				if (err) return res.sendStatus(403);
-				return next();
-			});
-		} else {
-			console.log('unsucceed');
-		}
+		// if (req.headers.Authorization && req.headers.Authorization.split(' ')[0] === 'Bearer') {
+		// 	const token = req.headers.authorization.split(' ')[1];
+		// 	jwt.verify(token, secret.Jwt.secret, (err, user) => {
+		// 		if (err) return res.sendStatus(403);
+		// 		return next();
+		// 	});
+		// } else {
+		// 	console.log('failure');
+
+		// }
+		var tokens =
+			req.body.token ||
+			req.query.token ||
+			req.headers['x-access-token'] ||
+			req.headers['Authorization'] ||
+			req.headers['authorization'];
+		console.log(tokens);
+		next();
 	}
 };
