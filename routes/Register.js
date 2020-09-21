@@ -18,8 +18,8 @@ router.post('/', (req, res) => {
 		errors.push({ msg: 'Password do not match' });
 	}
 	// Check pass length
-	if (password.length < 6) {
-		errors.push({ msg: 'password should be at least 6 characters long' });
+	if (password.length < 8) {
+		errors.push({ msg: 'password should be at least 8 characters long' });
 	}
 	if (errors.length > 0) {
 		res.render('Register', {

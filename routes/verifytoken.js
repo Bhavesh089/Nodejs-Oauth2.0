@@ -17,7 +17,7 @@ router.get('/:token', async (req, res, next) => {
 					currUser.local.active = true;
 					currUser.save();
 					req.flash('success_loginmsg', 'Successfully verified, you can login');
-					return res.redirect('/register');
+					return res.redirect('/login');
 				}
 				if (!currUser) {
 					req.flash({ failure_regmsg: 'Something went wrong or try signup again' });

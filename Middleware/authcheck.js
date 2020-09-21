@@ -1,4 +1,6 @@
 const User = require('../models/user-model');
+const jwt = require('jsonwebtoken');
+const secret = require('../config/keys');
 
 module.exports = {
 	ensureAuthenticated: async function(req, res, next) {
@@ -7,13 +9,13 @@ module.exports = {
 			if (curruser) {
 				token = curruser.generateJWT();
 				// res.setHeader('Content-Type', 'application/json; charset=utf-8');
-				res.set('authorization', 'Bearer ' + token);
+				res.header('Authorization', 'Bearer ' + token);
 
 				return next();
 			}
 		}
 		req.flash('error_msg', 'Please log in to view that resource');
-		res.redirect('/register');
+		res.redirect('/login');
 	},
 	forwardAuthenticated: function(req, res, next) {
 		if (!req.isAuthenticated()) {
@@ -21,24 +23,20 @@ module.exports = {
 		}
 		res.redirect('/connect');
 	},
-	token: function(req, res, next) {
-		// if (req.headers.Authorization && req.headers.Authorization.split(' ')[0] === 'Bearer') {
-		// 	const token = req.headers.authorization.split(' ')[1];
-		// 	jwt.verify(token, secret.Jwt.secret, (err, user) => {
-		// 		if (err) return res.sendStatus(403);
-		// 		return next();
-		// 	});
-		// } else {
-		// 	console.log('failure');
+	checktoken: function(req, res, next) {
+		var tokens = res.getHeaders();
 
-		// }
-		var tokens =
-			req.body.token ||
-			req.query.token ||
-			req.headers['x-access-token'] ||
-			req.headers['Authorization'] ||
-			req.headers['authorization'];
-		console.log(tokens);
-		next();
+		// if (req.headers.Authorization && req.headers.Authorization.split(' ')[0] === 'Bearer') {
+
+		console.log(tokens.authorization);
+		if (tokens.authorization.split(' ')[0] === 'Bearer') {
+			accessToken = tokens.authorization.split(' ')[1];
+			jwt.verify(accessToken, secret.Jwt.secret, (err, user) => {
+				if (err) return res.sendStatus(403);
+				return next();
+			});
+		} else {
+			console.log('failure');
+		}
 	}
 };

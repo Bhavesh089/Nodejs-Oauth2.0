@@ -86,17 +86,22 @@ The above copyright notice and this permission notice shall be included in all c
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">
+                      <!-- <span class="input-group-text">
                         <input type="checkbox" class="form-check-input"  id="exampleCheck1">
-                      </span>
+                      </span> -->
                     </div>
-                    <label class="form-check-label" for="exampleCheck1">I accept the Privacy Policy and the Terms of Service</label>
+                    <p style="position:relative; left:19px;">
+                      By submitting this form you agree to our <a href="#termsandcondition" style="text-decoration: underline; "> Privacy Policy</a>
+                   </p>
                   </div>
                 </div>
               </div>
               <div class="text-center" >
-                <button type="submit" style = 'align-content: center;' class="btn btn-primary btn-link btn-wd btn-lg">Get Started</button>
+                <button type="submit" style = 'align-content: center; position:relative; left:-28px; top:-11px' class="btn btn-primary btn-link btn-wd btn-lg">Get Started</button>
               </div>
+              <p style="position:relative; left:70px; top:-4px">
+               Already have an account ? <a href="/login" style="text-decoration: underline; "> Login </a>
+             </p>
             </form>
           </div>
         </div>
@@ -105,51 +110,6 @@ The above copyright notice and this permission notice shall be included in all c
           <div class="col">OR</div>
           <div class="col"><hr></div>
       </div> -->
-                <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-          <div class="card card-login">
-            <form class="form" method="POST" action="/login">
-              <div class="card-header card-header-primary text-center">
-                <h4 class="card-title">Login</h4>
-                <div class="social-line">
-                  <a href="/auth/login/facebook" class="btn btn-just-icon btn-link">
-                    <i class="fa fa-facebook-square"></i>
-                  </a>
-                  <a href="/auth/login/google" class="btn btn-just-icon btn-link">
-                    <i class="fa fa-google-plus"></i>
-                  </a>
-                </div>
-              </div>
-              <p class="description text-center">Or Be Classical</p>
-             
-              
-              <div class="card-body">
-                <%- include('partials/messagesLogin'); %>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">mail</i>
-                    </span>
-                  </div>
-                  <input name = 'email' id = 'email' type="email" class="form-control" placeholder="Email...">
-                </div>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">lock_outline</i>
-                    </span>
-                  </div>
-                  <input type="password" name = 'password' id = 'password' class="form-control" placeholder="Password...">
-                </div>
-              </div>
-              <div class="text" style="text-align: justify;">
-                <a href=/forgotpassword style="color: green; text-decoration: underline; position:relative; left:35px; top:24px">Forgot Password?</a>
-              </div>
-              <div class="footer text-center">
-                <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Get Started</button>
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
     </div>
   </div>

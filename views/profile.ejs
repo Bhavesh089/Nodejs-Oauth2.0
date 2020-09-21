@@ -96,7 +96,7 @@
               <!-- your navbar here -->
               <li class="nav-item dropdown">
                 <a class="nav-link" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:;">
-                  <i class="material-icons">person</i> <%=user.facebook.userEmail%> <%=user.google.userEmail%> <%=user.local.userEmail%>
+                  <i class="material-icons">person</i> <%=user.facebook.username%> <%=user.google.username%> <%=user.local.username%>
                   <p class="d-lg-none d-md-block">
                     Account
                   </p>
@@ -133,7 +133,7 @@
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="bmd-label-floating"><%=user.local.username%><%=user.facebook.username%><%=user.google.username%></label>
+                        <label class="bmd-label-floating"><%=user.local.userEmail%><%=user.facebook.userEmail%><%=user.google.userEmail%></label>
                         <input type="email" class="form-control" disabled>
                       </div>
                     </div>

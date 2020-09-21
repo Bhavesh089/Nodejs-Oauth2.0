@@ -89,7 +89,7 @@ router.post('/reset/:token', async (req, res, next) => {
 				user.local.resetpwToken = '';
 				user.save();
 				req.flash('success_loginmsg', 'Successfully updated password now you may login!');
-				return res.redirect('/register');
+				return res.redirect('/login');
 			}
 			// if (req.body.password === req.body.confirm) {
 			// 	user.setPassword(req.body.password);
