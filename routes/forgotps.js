@@ -61,6 +61,7 @@ router.post('/reset/:token', async (req, res, next) => {
 		.then((user) => {
 			const { password, confirm } = req.body;
 			let errors = [];
+			const oldPass = user.setPassword(password);
 
 			if (!user) {
 				console.log('token expired');
@@ -77,6 +78,9 @@ router.post('/reset/:token', async (req, res, next) => {
 			// Check pass length
 			if (password.length < 8) {
 				errors.push({ msg: 'password should be at least 8 characters long' });
+			}
+			if (user.validPassword(password)) {
+				errors.push({ msg: "Can't set old password as new password" });
 			}
 			if (errors.length > 0) {
 				res.render('reset', {
