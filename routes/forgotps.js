@@ -61,7 +61,6 @@ router.post('/reset/:token', async (req, res, next) => {
 		.then((user) => {
 			const { password, confirm } = req.body;
 			let errors = [];
-			const oldPass = user.setPassword(password);
 
 			if (!user) {
 				console.log('token expired');
