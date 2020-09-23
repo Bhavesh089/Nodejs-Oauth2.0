@@ -17511,10 +17511,12 @@ html[dir="rtl"] .form-check .form-check-sign .check:before {
 	border: 0;
 	margin-bottom: 30px;
 	margin-top: 30px;
+	margin-left: auto;
+	margin-right: auto;
 	border-radius: 6px;
 	color: #333333;
 	background: #fff;
-	width: 100%;
+	width: 85%;
 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -19939,4 +19941,24 @@ div {
 	background-size: contain no-repeat;
 }
 
+hr {
+	display: block;
+	line-height: initial;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ccc;
+	margin: 1em 0;
+	padding: 0;
+}
+
+.customHr {
+	width: 100%;
+	font-size: 1px;
+	color: rgba(0, 0, 0, 0);
+	line-height: 1px;
+
+	background-color: grey;
+	margin-top: 52px;
+	margin-bottom: 10px;
+}
 /*# sourceMappingURL=dashboard-free.css.map */
