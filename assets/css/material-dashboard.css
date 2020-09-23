@@ -4413,7 +4413,7 @@ tbody.collapse.show {
 
 .navbar-toggler {
 	padding: 0.25rem 0.75rem;
-	font-size: 1.25rem;
+	font-size: 0.25rem;
 	line-height: 1;
 	background-color: transparent;
 	border: 1px solid transparent;
@@ -17149,12 +17149,12 @@ legend {
 }
 
 a {
-	color: #1ca54a;
+	color: #6c757d;
 }
 
 a:hover,
 a:focus {
-	color: #89229b;
+	color: #6c757d;
 	text-decoration: none;
 }
 
@@ -18921,6 +18921,8 @@ Copyright (c) 2015 Daniel Eden
 		animation: none;
 		opacity: 1;
 		overflow-y: scroll;
+		margin-right: 19px;
+		margin-left: 79px;
 	}
 
 	.navbar.navbar-transparent .navbar-toggler .navbar-toggler-icon {
