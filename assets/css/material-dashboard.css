@@ -4412,7 +4412,7 @@ tbody.collapse.show {
 }
 
 .navbar-toggler {
-	padding: 0.25rem 0.75rem;
+	padding: 1.25rem 0.75rem;
 	font-size: 0.25rem;
 	line-height: 1;
 	background-color: transparent;
@@ -18907,7 +18907,7 @@ Copyright (c) 2015 Daniel Eden
 
 	.navbar .dropdown.show .dropdown-menu,
 	.navbar .dropdown .dropdown-menu {
-		background-color: transparent;
+		background-color: #f8f9fa;
 		border: 0;
 		padding-bottom: 15px;
 		transition: none;
@@ -18917,12 +18917,12 @@ Copyright (c) 2015 Daniel Eden
 		width: auto;
 		margin-bottom: 15px;
 		padding-top: 0;
-		height: 300px;
+		height: 131px;
 		animation: none;
 		opacity: 1;
 		overflow-y: scroll;
 		margin-right: 19px;
-		margin-left: 79px;
+		margin-left: 11px;
 	}
 
 	.navbar.navbar-transparent .navbar-toggler .navbar-toggler-icon {
