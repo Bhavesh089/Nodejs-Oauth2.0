@@ -27,6 +27,8 @@ The above copyright notice and this permission notice shall be included in all c
   <link href="../loginassets/css/material-kit.css?v=2.0.7" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../loginassets/demo/demo.css" rel="stylesheet" />
+  
+  <script src="https://www.google.com/recaptcha/api.js"></script>
 </head>
 
 <body class="login-page sidebar-collapse">
@@ -47,7 +49,7 @@ The above copyright notice and this permission notice shall be included in all c
                   </a>
                 </div>
               </div>
-              <p class="description text-center">Or Be Classical</p>
+              <p class="description text-center">Or</p>
               
               <div class="card-body">
                 <%- include('partials/messages'); %>
@@ -83,25 +85,23 @@ The above copyright notice and this permission notice shall be included in all c
                   </div>
                   <input type="password" class="form-control"  name = "password2" id = "password2"  placeholder="Confirm password..."  value="<%= typeof email != 'undefined' ? password2 : '' %>"/>
                 </div>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <div class="input-group-prepend">
                       <!-- <span class="input-group-text">
                         <input type="checkbox" class="form-check-input"  id="exampleCheck1">
                       </span> -->
+                <div class= "col">
                     </div>
-                    <p style="position:relative; left:19px;">
+                    <p style="position:relative; left:7%;">
                       By submitting this form you agree to our <a href="https://www.fiolabs.ai/privacy-policy" style="text-decoration: underline; "> Privacy Policy</a>
                    </p>
-                  </div>
-                </div>
               </div>
               <div class="text-center" >
-                <button type="submit" style = 'align-content: center; position:relative; left:-28px; top:-11px' class="btn btn-primary  btn-wd btn-lg">Get Started</button>
+                <button type="submit" style = 'align-content: center; position:relative; left:auto; top:auto' class="btn btn-primary  btn-wd btn-lg">Get Started</button>
               </div>
-              <p style="position:relative; left:70px; top:-4px">
-               Already have an account ? <a href="/login" style="text-decoration: underline; "> Login </a>
+              <div class="g-recaptcha register-recaptcha" data-sitekey="6LfZUNAZAAAAAKV61xShavwlZi7v0tEp1DGVzxL4"></div>
+              <p style="position:relative; left: 22%; margin-top: 3%;">
+               Already have an account ? <a href="/login" style="text-decoration: underline;  "> Login </a>
              </p>
+            </div>
             </form>
           </div>
         </div>

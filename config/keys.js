@@ -24,5 +24,8 @@ module.exports = {
 	mailtrap: {
 		user: 'cfa70e124009e8',
 		pass: 'e480180cb5e274'
+	},
+	googleCaptcha: {
+		secret: '6LfZUNAZAAAAADlKpc7qYlNzvx8B25nzo2CbO8DP'
 	}
 };

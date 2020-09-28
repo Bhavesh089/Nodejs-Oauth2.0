@@ -3,24 +3,55 @@ const router = express.Router();
 const User = require('../models/user-model');
 const mailer = require('../misc/mailer');
 const randString = require('randomstring');
+const captchaSecret = require('../config/keys');
+const request = require('request');
 //Register Handle
 router.post('/', (req, res) => {
 	console.log(req.body);
 	const { name, email, password, password2 } = req.body;
+	const CaptchaResponse = req.body['g-recaptcha-response'];
 	let errors = [];
+	let recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify?';
+	recaptcha_url += 'secret=' + captchaSecret.googleCaptcha.secret + '&';
+	recaptcha_url += 'response=' + CaptchaResponse + '&';
+	recaptcha_url += 'remoteip=' + req.connection.remoteAddress;
 
 	//check required fields
 	if (!name || !email || !password || !password2) {
-		errors.push({ msg: 'please fill in all fields' });
+		errors.push({ msg: 'Please fill in all fields' });
+	}
+
+	if (!name.match('^[a-zA-Z ]*$')) {
+		errors.push({ msg: 'Only Characters with white space are allowed' });
 	}
 	//check password2
 	if (password !== password2) {
 		errors.push({ msg: 'Password do not match' });
 	}
+
 	// Check pass length
 	if (password.length < 8) {
-		errors.push({ msg: 'password should be at least 8 characters long' });
+		errors.push({ msg: 'Password should be at least 8 characters long' });
 	}
+
+	if (!password.match('(?=.*?[#?!@$%^&*-])')) {
+		errors.push({ msg: 'Password must contains at least one special character ' });
+	}
+	if (!password.match('(?=.*?[0-9])')) {
+		errors.push({ msg: 'Password must contains at least one number ' });
+	}
+	//check captcha response
+	if (!CaptchaResponse) {
+		errors.push({ msg: 'Please validate captcha' });
+	}
+
+	request(recaptcha_url, function(error, res, body) {
+		body = JSON.parse(body);
+		if (body.success !== undefined && !body.success) {
+			return errors.push({ message: 'Captcha validation failed' });
+		}
+	});
+
 	if (errors.length > 0) {
 		res.render('Register', {
 			errors,

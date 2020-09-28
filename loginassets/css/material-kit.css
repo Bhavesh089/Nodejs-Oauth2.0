@@ -19199,5 +19199,16 @@ footer .pull-center {
 	height: 20px;
 	width: 10px;
 }
+.login-recaptcha {
+	margin-top: 3%;
+	margin-left: 6%;
+	margin-bottom: auto;
+}
+
+.register-recaptcha {
+	margin-top: 5%;
+	margin-left: 7%;
+	margin-bottom: auto;
+}
 
 /*# sourceMappingURL=kit-free.css.map */
