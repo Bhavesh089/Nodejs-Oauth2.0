@@ -24,6 +24,10 @@ router.post('/', (req, res) => {
 	if (!name.match('^[a-zA-Z ]*$')) {
 		errors.push({ msg: 'Only Characters with white space are allowed' });
 	}
+
+	if (!email.match('^[a-zA-Z0-9]+(.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(.[a-zA-Z0-9-]+)*(.[a-zA-Z]{2,15})$')) {
+		errors.push({ msg: 'Enter valid email address' });
+	}
 	//check password2
 	if (password !== password2) {
 		errors.push({ msg: 'Password do not match' });
