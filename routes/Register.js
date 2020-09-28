@@ -39,10 +39,10 @@ router.post('/', (req, res) => {
 	}
 
 	if (!password.match('(?=.*?[#?!@$%^&*-])')) {
-		errors.push({ msg: 'Password must contains at least one special character ' });
+		errors.push({ msg: 'Password must contain at least one special character ' });
 	}
 	if (!password.match('(?=.*?[0-9])')) {
-		errors.push({ msg: 'Password must contains at least one number ' });
+		errors.push({ msg: 'Password must contain at least one number ' });
 	}
 	//check captcha response
 	if (!CaptchaResponse) {
