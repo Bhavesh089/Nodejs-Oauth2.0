@@ -19199,6 +19199,7 @@ footer .pull-center {
 	height: 20px;
 	width: 10px;
 }
+
 .login-recaptcha {
 	margin-top: 3%;
 	margin-left: 6%;
@@ -19209,6 +19210,22 @@ footer .pull-center {
 	margin-top: 5%;
 	margin-left: 7%;
 	margin-bottom: auto;
+}
+
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (-webkit-min-device-pixel-ratio: 1.5) {
+	.login-recaptcha {
+		margin-top: 3%;
+		margin-left: 2%;
+		margin-bottom: auto;
+	}
+}
+
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (-webkit-min-device-pixel-ratio: 1.5) {
+	.register-recaptcha {
+		margin-top: 5%;
+		margin-left: 0%;
+		margin-bottom: auto;
+	}
 }
 
 /*# sourceMappingURL=kit-free.css.map */
