@@ -99,7 +99,8 @@ passport.use(
 			clientID: keys.facebook.clientID,
 			clientSecret: keys.facebook.clientSecret,
 			// callbackURL: 'http://localhost:3000/auth/facebook/redirect'
-			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/login/facebook/redirect',
+			// callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/login/facebook/redirect',
+			callbackURL: 'https://care.fiolabs.ai/auth/login/facebook/redirect',
 			profileFields: [ 'id', 'email', 'displayName', 'photos' ]
 		},
 		function(accessToken, refreshToken, profile, done) {
@@ -173,7 +174,8 @@ passport.use(
 	new GoogleStrategy(
 		{
 			// options for the google strategy
-			callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/login/google/redirect',
+			// callbackURL: 'https://lazadaserver-fback.herokuapp.com/auth/login/google/redirect',
+			callbackURL: 'https://care.fiolabs.ai/auth/login/google/redirect',
 			clientID: keys.google.clientID,
 			clientSecret: keys.google.clientSecret
 		},

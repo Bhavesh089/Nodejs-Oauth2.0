@@ -118,6 +118,17 @@ app.get('/', (req, res) => {
 	res.render('Register', { user: req.user });
 });
 
+app.use((req, res, next) => {
+	const error = new Error('Not found');
+	error.status = 404;
+	next(error);
+});
+
+app.use((error, req, res, next) => {
+	res.status(error.status || 500);
+	res.status(404).render('pagenotfound', { title: 'Sorry, page not found' });
+});
+
 //Port listening
 app.listen(port, () => {
 	console.log('app now listening for requests on port ' + port);

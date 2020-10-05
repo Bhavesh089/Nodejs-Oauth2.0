@@ -26,8 +26,24 @@ router.post('/', async (req, res, next) => {
 			const message = {
 				from: 'care@fiolabs.ai', // Sender address
 				to: email, // List of recipients
-				subject: 'Reset password', // Subject line
-				html: `please click this link to reset password: <a href="${url}">${url}</a>`
+				subject: 'FIO CARE Password reset ', // Subject line
+				html: `Hello ${user.local.username}, 
+							<p>
+							You recently requested to reset your password for your FIO CARE account click the reset button to reset it.   
+							</p>
+							<button type="button" href = "${url}">Reset</button>
+							<p>If you did not request a password reset, please ignore this email.</p>
+							<p>
+							 Any doubts or question? 
+							</p>
+							<p>Email us at <a href = "support@fiolabs.ai" >support@fiolabs.ai</a> we will be happy to help.</p>
+							<p>If you are having trouble clinking the password reset button please copy and paste the URL below into your web browser: 
+							<a href="${url}">${url}</a> </p>
+							<p>
+							Thank You,  
+							</p>
+							<p>
+							Team FIO CARE. </p>` // Plain text body
 			};
 			mailer.sendmessage(message);
 			req.flash('success_loginmsg', 'Reset password link has been sent to your email!');

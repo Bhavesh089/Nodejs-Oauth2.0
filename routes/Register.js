@@ -108,8 +108,25 @@ router.post('/', (req, res) => {
 						const message = {
 							from: 'care@fiolabs.ai', // Sender address
 							to: email, // List of recipients
-							subject: 'please verify your email ', // Subject line
-							html: `please click this link to confirm your email: <a href="${url}">${url}</a>` // Plain text body
+							subject: 'FIO CARE email registration confirmation', // Subject line
+							html: `Hello ${user.local.username}, 
+							<p>
+							Thank you for registering for FIO CARE. We are excited to help you acquire, retain and engage your customers.  
+							</p>
+							<p>To confirm your registration, please click on the following link:
+							 <a href="${url}">${url}</a></p>
+							<p>
+							 Any doubts or question? 
+							</p>
+							<p>Email us at <a href = "support@fiolabs.ai" >support@fiolabs.ai</a> we will be happy to help.</p>
+							<p>
+							We are excited to see how CARE will elevate your business. 
+							</p>
+							<p>
+							Thank You,  
+							</p>
+							<p>
+							Team FIO CARE. </p>` // Plain text body
 						};
 						mailer.sendmessage(message);
 						req.flash('success_msg', 'Please check you email for confirmation');
